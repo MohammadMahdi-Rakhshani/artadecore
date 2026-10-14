@@ -1,0 +1,3194 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>پنل ادمین | دکوراسیون آرتا</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@latest/400.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@latest/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/vazirmatn@latest/800.css">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f0d0a;--bg2:#141209;--surface:#1a1710;--surface2:#221f16;--surface3:#2a261c;
+  --ink:#f0e8d8;--ink2:#a99f8d;--ink3:#6b6050;--line:#2e2a1f;
+  --gold:#c9a25a;--gold-d:#a9853f;--gold-l:#e8c47a;
+  --teal:#4d8f88;--red:#c94a4a;--green:#4a9c6b;--blue:#4a7ac9;--orange:#c97a4a;
+  --rad:14px;--rad-sm:10px;
+  --sh:0 8px 32px rgba(0,0,0,.5);
+  --sh-sm:0 4px 16px rgba(0,0,0,.35);
+  --ff:'Vazirmatn',system-ui,Tahoma,sans-serif;
+  --ease:cubic-bezier(.22,1,.3,1);
+  --sidebar-w:260px;
+}
+html,body{height:100%;font-family:var(--ff);font-size:15px;line-height:1.7;background:var(--bg);color:var(--ink);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font-family:inherit;font-size:inherit}
+img{max-width:100%;display:block}
+::selection{background:var(--gold);color:#1c150c}
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-d)}
+
+/* ========== LOGIN PAGE ========== */
+#loginPage{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:clamp(28px,5vw,44px);width:100%;max-width:420px;box-shadow:var(--sh)}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.login-logo .mk{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--gold-d));display:grid;place-items:center;font-size:1.4rem;box-shadow:0 6px 18px rgba(201,162,90,.35)}
+.login-logo h1{font-size:1.25rem;font-weight:800;color:var(--ink)}
+.login-logo span{font-size:.75rem;color:var(--gold);font-weight:700;display:block;margin-top:-2px}
+.login-card h2{font-size:1.3rem;font-weight:800;margin-bottom:6px;color:var(--ink)}
+.login-card p{color:var(--ink2);font-size:.85rem;margin-bottom:28px}
+.form-field{margin-bottom:18px}
+.form-field label{display:block;font-size:.8rem;font-weight:700;color:var(--gold);margin-bottom:7px}
+.form-field input{width:100%;background:var(--surface2);border:1.5px solid var(--line);border-radius:var(--rad-sm);padding:12px 16px;color:var(--ink);font-size:.9rem;transition:.3s;outline:none}
+.form-field input:focus{border-color:var(--gold);background:rgba(201,162,90,.06)}
+.btn-login{width:100%;padding:14px;background:var(--gold);color:#1c150c;border-radius:var(--rad);font-weight:800;font-size:.95rem;transition:.35s var(--ease);margin-top:8px}
+.btn-login:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,162,90,.35)}
+.login-err{background:rgba(201,74,74,.12);border:1px solid rgba(201,74,74,.35);border-radius:var(--rad-sm);padding:10px 14px;color:#e88;font-size:.82rem;margin-top:14px;display:none}
+.login-err.show{display:block}
+
+/* ========== APP SHELL ========== */
+#app{display:none;height:100vh;overflow:hidden}
+#app.visible{display:flex}
+
+/* ========== SIDEBAR ========== */
+.sidebar{width:var(--sidebar-w);background:var(--surface);border-inline-end:1px solid var(--line);display:flex;flex-direction:column;height:100%;flex-shrink:0;transition:transform .45s var(--ease);z-index:200;overflow-y:auto;overflow-x:hidden}
+.sb-head{padding:20px 18px 16px;border-bottom:1px solid var(--line);flex-shrink:0}
+.sb-logo{display:flex;align-items:center;gap:10px}
+.sb-logo .mk{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--gold),var(--gold-d));display:grid;place-items:center;font-size:1.1rem;flex-shrink:0}
+.sb-logo b{font-size:1rem;font-weight:800;color:var(--ink);display:block}
+.sb-logo span{font-size:.7rem;color:var(--gold);font-weight:700}
+.sb-admin-badge{margin-top:14px;background:rgba(201,162,90,.1);border:1px solid rgba(201,162,90,.25);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:10px}
+.sb-admin-badge .av{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#1c150c;display:grid;place-items:center;font-weight:800;font-size:.85rem;flex-shrink:0}
+.sb-admin-badge .ai b{font-size:.82rem;font-weight:800;color:var(--ink);display:block}
+.sb-admin-badge .ai span{font-size:.7rem;color:var(--gold)}
+nav.sb-nav{flex:1;padding:14px 10px;display:flex;flex-direction:column;gap:2px}
+.sb-section{font-size:.68rem;font-weight:800;color:var(--ink3);letter-spacing:.07em;padding:10px 10px 6px;margin-top:8px}
+.sb-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;font-weight:700;font-size:.87rem;color:var(--ink2);transition:.25s;cursor:pointer;position:relative}
+.sb-item:hover{background:var(--surface2);color:var(--ink)}
+.sb-item.active{background:rgba(201,162,90,.12);color:var(--gold)}
+.sb-item.active::before{content:"";position:absolute;inset-inline-start:0;top:25%;bottom:25%;width:3px;background:var(--gold);border-radius:0 3px 3px 0}
+.sb-item .ic{width:32px;height:32px;border-radius:9px;background:var(--surface2);display:grid;place-items:center;font-size:1rem;flex-shrink:0;transition:.25s}
+.sb-item.active .ic{background:rgba(201,162,90,.18);color:var(--gold)}
+.sb-item .badge{margin-inline-start:auto;background:var(--red);color:#fff;font-size:.65rem;font-weight:800;padding:2px 7px;border-radius:999px;min-width:20px;text-align:center}
+.sb-item .badge.green{background:var(--green)}
+.sb-foot{padding:14px 10px;border-top:1px solid var(--line);flex-shrink:0}
+.sb-logout{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:11px;font-weight:700;font-size:.87rem;color:var(--red);transition:.25s;cursor:pointer;width:100%}
+.sb-logout:hover{background:rgba(201,74,74,.1)}
+.sb-logout .ic{width:32px;height:32px;border-radius:9px;background:rgba(201,74,74,.1);display:grid;place-items:center;font-size:1rem}
+
+/* ========== MAIN AREA ========== */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--surface);border-bottom:1px solid var(--line);padding:14px 22px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.tb-burger{width:38px;height:38px;border-radius:10px;background:var(--surface2);border:1px solid var(--line);display:none;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex-shrink:0}
+.tb-burger span{width:18px;height:2px;background:var(--gold);border-radius:2px;transition:.3s}
+.tb-page-title{font-size:1rem;font-weight:800;color:var(--ink);flex:1}
+.tb-actions{display:flex;gap:8px;align-items:center}
+.tb-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:999px;font-size:.78rem;font-weight:700;background:var(--surface2);border:1px solid var(--line);color:var(--ink2);transition:.25s;white-space:nowrap}
+.tb-btn:hover{border-color:var(--gold);color:var(--gold)}
+.tb-btn.primary{background:var(--gold);color:#1c150c;border-color:var(--gold)}
+.tb-btn.primary:hover{background:var(--gold-l);transform:translateY(-1px)}
+.content-area{flex:1;overflow-y:auto;padding:24px;background:var(--bg)}
+
+/* ========== PANELS ========== */
+.panel{display:none}
+.panel.active{display:block}
+
+/* ========== DASHBOARD STATS ========== */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.stats-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+.stat-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);padding:20px;position:relative;overflow:hidden;transition:.3s}
+.stat-card:hover{border-color:rgba(201,162,90,.3);transform:translateY(-2px)}
+.stat-card .sc-icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;margin-bottom:14px}
+.stat-card .sc-num{font-size:1.9rem;font-weight:800;color:var(--ink);display:block;line-height:1}
+.stat-card .sc-num i{font-style:normal;color:var(--gold)}
+.stat-card .sc-label{font-size:.78rem;color:var(--ink2);font-weight:600;margin-top:4px;display:block}
+.stat-card .sc-trend{position:absolute;top:16px;inset-inline-end:16px;font-size:.72rem;font-weight:800;padding:3px 8px;border-radius:999px}
+.stat-card .sc-trend.up{background:rgba(74,156,107,.15);color:#4a9c6b}
+.stat-card .sc-trend.down{background:rgba(201,74,74,.12);color:#e88}
+
+/* ========== CARDS & TABLES ========== */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);overflow:hidden}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line)}
+.card-head h3{font-size:.95rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
+.card-head h3 .ic{font-size:1rem}
+.card-body{padding:20px}
+.card + .card{margin-top:16px}
+
+/* table */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:.72rem;font-weight:800;color:var(--ink3);letter-spacing:.05em;text-align:right;padding:10px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody td{padding:13px 14px;border-bottom:1px solid var(--line);font-size:.82rem;color:var(--ink2);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--surface2)}
+tbody td .cell-bold{color:var(--ink);font-weight:700;display:block}
+tbody td .cell-sub{font-size:.72rem;color:var(--ink3);margin-top:1px}
+
+/* badges */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;font-size:.72rem;font-weight:800;white-space:nowrap}
+.badge.new{background:rgba(201,162,90,.15);color:var(--gold)}
+.badge.pending{background:rgba(201,162,90,.15);color:var(--gold)}
+.badge.confirmed{background:rgba(74,156,107,.15);color:#4a9c6b}
+.badge.done{background:rgba(74,122,201,.15);color:#6a9ce8}
+.badge.cancelled{background:rgba(201,74,74,.1);color:#e88}
+.badge.active{background:rgba(74,156,107,.15);color:#4a9c6b}
+.badge.inactive{background:rgba(201,74,74,.1);color:#e88}
+.badge::before{content:"•";font-size:.8em}
+
+/* action buttons */
+.act-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:8px;font-size:.75rem;font-weight:700;transition:.2s;border:1px solid transparent}
+.act-btn.edit{background:rgba(201,162,90,.1);color:var(--gold);border-color:rgba(201,162,90,.25)}
+.act-btn.edit:hover{background:var(--gold);color:#1c150c}
+.act-btn.del{background:rgba(201,74,74,.08);color:#e88;border-color:rgba(201,74,74,.2)}
+.act-btn.del:hover{background:var(--red);color:#fff}
+.act-btn.view{background:rgba(74,122,201,.1);color:#6a9ce8;border-color:rgba(74,122,201,.2)}
+.act-btn.view:hover{background:var(--blue);color:#fff}
+.act-btn.confirm{background:rgba(74,156,107,.1);color:#4a9c6b;border-color:rgba(74,156,107,.2)}
+.act-btn.confirm:hover{background:var(--green);color:#fff}
+.act-btn-group{display:flex;gap:5px;flex-wrap:wrap}
+
+/* ========== FORM ELEMENTS ========== */
+.form-row{display:grid;gap:16px;margin-bottom:16px}
+.form-row.cols-2{grid-template-columns:1fr 1fr}
+.form-row.cols-3{grid-template-columns:1fr 1fr 1fr}
+@media(max-width:640px){.form-row.cols-2,.form-row.cols-3{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:.78rem;font-weight:800;color:var(--gold)}
+.field input,.field textarea,.field select{background:var(--surface2);border:1.5px solid var(--line);border-radius:var(--rad-sm);padding:10px 14px;color:var(--ink);font-size:.88rem;outline:none;transition:.3s;width:100%}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold);background:rgba(201,162,90,.05)}
+.field textarea{resize:vertical;min-height:90px}
+.field select option{background:var(--surface2)}
+.field-hint{font-size:.72rem;color:var(--ink3);margin-top:2px}
+
+/* ========== MODAL ========== */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:800;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:20px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:1}
+.modal-head h3{font-size:1rem;font-weight:800;color:var(--ink)}
+.modal-close{width:34px;height:34px;border-radius:9px;background:var(--surface2);display:grid;place-items:center;color:var(--ink2);transition:.25s;font-size:1.1rem}
+.modal-close:hover{background:var(--red);color:#fff}
+.modal-body{padding:22px}
+.modal-foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+
+/* ========== SEO ANALYZER ========== */
+.seo-score{display:flex;align-items:center;gap:20px;padding:20px;background:var(--surface2);border-radius:var(--rad);margin-bottom:20px}
+.seo-circle{width:80px;height:80px;border-radius:50%;border:5px solid var(--line);display:grid;place-items:center;flex-shrink:0;position:relative}
+.seo-circle .score-num{font-size:1.5rem;font-weight:800}
+.seo-info h4{font-size:1rem;font-weight:800;color:var(--ink);margin-bottom:4px}
+.seo-info p{font-size:.8rem;color:var(--ink2)}
+.seo-checks{display:flex;flex-direction:column;gap:10px}
+.seo-check{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:var(--rad-sm);background:var(--surface2)}
+.seo-check .ic{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font-size:.85rem;flex-shrink:0}
+.seo-check .ic.ok{background:rgba(74,156,107,.15);color:#4a9c6b}
+.seo-check .ic.warn{background:rgba(201,162,90,.12);color:var(--gold)}
+.seo-check .ic.err{background:rgba(201,74,74,.1);color:#e88}
+.seo-check-info b{font-size:.82rem;font-weight:800;color:var(--ink);display:block}
+.seo-check-info span{font-size:.75rem;color:var(--ink2)}
+
+/* ========== VISITS CHART ========== */
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:120px;padding:0 4px}
+.chart-bar-wrap{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1}
+.chart-bar{width:100%;border-radius:5px 5px 0 0;background:rgba(201,162,90,.25);transition:.4s var(--ease);min-height:4px;cursor:pointer;position:relative}
+.chart-bar:hover{background:var(--gold)}
+.chart-bar .cb-tip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--surface3);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:.7rem;font-weight:700;color:var(--ink);white-space:nowrap;opacity:0;pointer-events:none;transition:.2s;z-index:10}
+.chart-bar:hover .cb-tip{opacity:1}
+.chart-bar-lbl{font-size:.62rem;color:var(--ink3);font-weight:700}
+
+/* ========== STYLE CARDS ADMIN ========== */
+.style-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.style-admin-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);overflow:hidden;transition:.3s}
+.style-admin-card:hover{border-color:rgba(201,162,90,.3)}
+.sac-img{height:140px;overflow:hidden;background:var(--surface2);position:relative}
+.sac-img img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.sac-img .sac-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;gap:10px;opacity:0;transition:.3s}
+.style-admin-card:hover .sac-overlay{opacity:1}
+.sac-body{padding:14px 16px}
+.sac-body h4{font-size:.92rem;font-weight:800;color:var(--ink);margin-bottom:4px}
+.sac-body p{font-size:.75rem;color:var(--ink2);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sac-status{display:flex;align-items:center;justify-content:space-between}
+
+/* ========== 3D VIEWS ADMIN ========== */
+.views-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.view-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);overflow:hidden;transition:.3s}
+.view-card:hover{border-color:rgba(201,162,90,.3);transform:translateY(-2px)}
+.vc-preview{height:110px;background:var(--surface2);position:relative;overflow:hidden}
+.vc-preview canvas,.vc-preview .vc-placeholder{width:100%;height:100%;object-fit:cover}
+.vc-placeholder{display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--ink3)}
+.vc-body{padding:12px 14px}
+.vc-body h5{font-size:.85rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.vc-body span{font-size:.72rem;color:var(--ink2)}
+.vc-foot{padding:10px 14px;border-top:1px solid var(--line);display:flex;gap:6px}
+
+/* ========== REQUESTS ========== */
+.req-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.req-filter{padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:700;background:var(--surface);border:1.5px solid var(--line);color:var(--ink2);cursor:pointer;transition:.25s}
+.req-filter.on{background:var(--gold);border-color:var(--gold);color:#1c150c}
+.req-filter:hover:not(.on){border-color:var(--gold);color:var(--gold)}
+.req-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);padding:16px 18px;margin-bottom:12px;transition:.3s}
+.req-card:hover{border-color:rgba(201,162,90,.3)}
+.req-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.req-head h4{font-size:.9rem;font-weight:800;color:var(--ink)}
+.req-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.req-meta-item{display:flex;align-items:center;gap:5px;font-size:.75rem;color:var(--ink2)}
+.req-meta-item .ri{font-size:.9rem}
+.req-note{background:var(--surface2);border-radius:var(--rad-sm);padding:10px 12px;font-size:.8rem;color:var(--ink2);margin-bottom:12px}
+.req-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ========== SEO ========== */
+.seo-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.seo-tab{padding:7px 16px;border-radius:999px;font-size:.8rem;font-weight:700;background:var(--surface);border:1.5px solid var(--line);color:var(--ink2);cursor:pointer;transition:.25s}
+.seo-tab.on{background:var(--gold);border-color:var(--gold);color:#1c150c}
+.seo-tab-panel{display:none}
+.seo-tab-panel.active{display:block}
+.seo-keyword-list{display:flex;flex-direction:column;gap:8px}
+.seo-kw{display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border-radius:var(--rad-sm)}
+.seo-kw-name{flex:1;font-size:.85rem;font-weight:700;color:var(--ink)}
+.seo-kw-bar-wrap{width:120px;height:6px;background:var(--line);border-radius:3px;overflow:hidden;flex-shrink:0}
+.seo-kw-bar{height:100%;border-radius:3px;background:var(--gold)}
+.seo-kw-num{width:40px;text-align:center;font-size:.75rem;font-weight:800;color:var(--gold)}
+.seo-meta-fields{display:flex;flex-direction:column;gap:14px}
+.seo-char-counter{font-size:.72rem;color:var(--ink3);text-align:left;margin-top:3px}
+.seo-char-counter.warn{color:var(--orange)}
+.seo-char-counter.ok{color:var(--green)}
+
+/* ========== USER STATS ========== */
+.user-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:700px){.user-stats-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:440px){.user-stats-grid{grid-template-columns:1fr}}
+.us-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--rad);padding:16px 18px}
+.us-card h4{font-size:.75rem;font-weight:800;color:var(--ink3);letter-spacing:.04em;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.us-card h4 .ic{font-size:.9rem}
+.us-big{font-size:2rem;font-weight:800;color:var(--ink)}
+.us-big i{font-style:normal;color:var(--gold)}
+.us-sub{font-size:.75rem;color:var(--ink2);margin-top:3px}
+.page-visits-list{display:flex;flex-direction:column;gap:6px}
+.pv-item{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--surface2);border-radius:var(--rad-sm)}
+.pv-item .pv-name{flex:1;font-size:.82rem;font-weight:700;color:var(--ink)}
+.pv-item .pv-bar-wrap{width:80px;height:5px;background:var(--line);border-radius:3px;overflow:hidden}
+.pv-item .pv-bar{height:100%;border-radius:3px;background:var(--teal)}
+.pv-item .pv-num{font-size:.78rem;font-weight:800;color:var(--ink2);width:40px;text-align:center}
+
+/* ========== RESPONSIVE SIDEBAR ========== */
+@media(max-width:860px){
+  .sidebar{position:fixed;top:0;bottom:0;inset-inline-start:0;transform:translateX(110%);border-inline-end:1px solid var(--line)}
+  [dir="rtl"] .sidebar{transform:translateX(110%)}
+  [dir="rtl"] .sidebar.open{transform:translateX(0)}
+  [dir="ltr"] .sidebar{transform:translateX(-110%)}
+  [dir="ltr"] .sidebar.open{transform:translateX(0)}
+  .sidebar.open{transform:translateX(0)}
+  .tb-burger{display:flex}
+  .sb-scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:199;display:none}
+  .sb-scrim.show{display:block}
+}
+
+/* ========== TOAST ========== */
+.toast-wrap{position:fixed;bottom:24px;inset-inline-end:24px;z-index:1000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--surface3);border:1px solid var(--line);border-radius:12px;padding:12px 18px;font-size:.82rem;font-weight:700;color:var(--ink);box-shadow:var(--sh-sm);transform:translateY(20px);opacity:0;transition:.4s var(--ease);pointer-events:auto;display:flex;align-items:center;gap:10px;max-width:300px}
+.toast.show{transform:none;opacity:1}
+.toast .t-ic{font-size:1.1rem}
+.toast.success{border-color:rgba(74,156,107,.4);background:rgba(74,156,107,.08)}
+.toast.error{border-color:rgba(201,74,74,.35);background:rgba(201,74,74,.07)}
+
+
+/* ========== IMAGE MANAGER ========== */
+.style-imgs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.img-manager-block{border:1.5px solid var(--line);border-radius:var(--rad);overflow:hidden;background:var(--surface2);transition:.3s}
+.img-manager-block:hover{border-color:rgba(201,162,90,.4)}
+.imb-preview-wrap{position:relative;height:160px;overflow:hidden;background:var(--surface3)}
+.imb-preview{width:100%;height:100%;object-fit:cover;transition:.4s}
+.imb-overlay{position:absolute;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;gap:8px;opacity:0;transition:.3s}
+.img-manager-block:hover .imb-overlay{opacity:1}
+.imb-meta{padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.imb-label{font-size:.8rem;font-weight:800;color:var(--ink)}
+.imb-url{font-size:.68rem;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr}
+.imb-slot-badge{display:inline-flex;align-items:center;gap:4px;font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:999px;margin-top:2px}
+.imb-slot-badge.hero{background:rgba(201,162,90,.12);color:var(--gold)}
+.imb-slot-badge.gallery{background:rgba(77,143,136,.12);color:var(--teal)}
+.imb-slot-badge.thumb{background:rgba(74,122,201,.12);color:#6a9ce8}
+.img-edit-modal-body{display:flex;flex-direction:column;gap:16px}
+.img-preview-big{width:100%;height:200px;object-fit:cover;border-radius:var(--rad-sm);border:1.5px solid var(--line);background:var(--surface2)}
+.img-url-input-wrap{position:relative}
+.img-url-input-wrap input{padding-inline-end:80px}
+.img-test-btn{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);padding:5px 12px;font-size:.75rem;font-weight:700;border-radius:8px;background:rgba(201,162,90,.15);color:var(--gold);border:1px solid rgba(201,162,90,.3);transition:.2s}
+.img-test-btn:hover{background:var(--gold);color:#1c150c}
+.img-presets{display:flex;flex-direction:column;gap:6px}
+.img-preset-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:var(--rad-sm);cursor:pointer;transition:.2s;border:1.5px solid transparent}
+.img-preset-item:hover,.img-preset-item.selected{border-color:var(--gold);background:rgba(201,162,90,.06)}
+.img-preset-item img{width:48px;height:36px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.img-preset-item span{font-size:.78rem;font-weight:700;color:var(--ink2)}
+.img-drop-zone{border:2px dashed var(--line);border-radius:var(--rad);padding:28px;text-align:center;color:var(--ink3);font-size:.82rem;transition:.3s;cursor:pointer}
+.img-drop-zone:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,162,90,.04)}
+.img-drop-zone .dz-ic{font-size:2rem;margin-bottom:8px;display:block}
+.changed-badge{background:rgba(201,162,90,.15);color:var(--gold);font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:999px;margin-inline-start:8px}
+
+/* ========== MISC ========== */
+.section-title{font-size:1rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.section-title .ic{font-size:1.1rem;color:var(--gold)}
+.divider{height:1px;background:var(--line);margin:20px 0}
+.empty-state{text-align:center;padding:40px 20px;color:var(--ink2)}
+.empty-state .es-ic{font-size:3rem;margin-bottom:12px;opacity:.5}
+.empty-state p{font-size:.85rem}
+.tag-pill{display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;font-size:.7rem;font-weight:700;background:rgba(201,162,90,.1);color:var(--gold);border:1px solid rgba(201,162,90,.2)}
+
+/* ========== TABS ========== */
+.tabs{display:flex;gap:4px;background:var(--surface2);border-radius:12px;padding:4px;margin-bottom:20px;flex-wrap:wrap}
+.tab-btn{flex:1;padding:8px 12px;border-radius:9px;font-size:.8rem;font-weight:700;color:var(--ink2);transition:.25s;text-align:center;white-space:nowrap}
+.tab-btn.on{background:var(--gold);color:#1c150c;box-shadow:0 2px 8px rgba(201,162,90,.25)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ========== PROGRESS BAR ========== */
+.progress-bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:4px 0}
+.progress-fill{height:100%;border-radius:3px;background:var(--gold);transition:width .8s var(--ease)}
+.progress-fill.teal{background:var(--teal)}
+.progress-fill.green{background:var(--green)}
+.progress-fill.red{background:var(--red)}
+</style>
+</head>
+<script>
+/**
+ * ================================================================
+ * ARTA DECOR — API Integration Patch for admin.html
+ * این کد را قبل از </body> در admin.html اضافه کنید
+ * (جایگزین کامل localStorage با API calls)
+ * ================================================================
+ */
+
+/* ============================================================
+   CORE API WRAPPER
+   ============================================================ */
+var API = {
+  _call: function(endpoint, method, data) {
+    var opts = {
+      method: method,
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/json' }
+    };
+    if (data && method !== 'GET') opts.body = JSON.stringify(data);
+    return fetch('/api/' + endpoint, opts).then(function(r) {
+      if (r.status === 401) {
+        // session منقضی شده
+        document.getElementById('app').classList.remove('visible');
+        document.getElementById('loginPage').style.display = 'flex';
+        showToast('نشست شما منقضی شده — لطفاً مجدداً وارد شوید', 'error');
+        return { success: false, message: 'Unauthorized' };
+      }
+      return r.json();
+    });
+  },
+  get:    function(ep)      { return this._call(ep, 'GET'); },
+  post:   function(ep, d)   { return this._call(ep, 'POST', d); },
+  put:    function(ep, d)   { return this._call(ep, 'PUT', d); },
+  delete: function(ep)      { return this._call(ep, 'DELETE'); }
+};
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+
+// جایگزین doLogin (نام کاربر را نه ایمیل می‌خواهد)
+function doLogin() {
+  // فیلد username ممکنه id="loginEmail" یا id="loginUser" باشه
+  var uEl  = document.getElementById('loginUser') || document.getElementById('loginEmail');
+  var pEl  = document.getElementById('loginPass');
+  var err  = document.getElementById('loginErr');
+  var btn  = document.getElementById('loginBtn') || document.querySelector('.btn-login');
+
+  var u = uEl ? uEl.value.trim() : '';
+  var p = pEl ? pEl.value : '';
+  if (!u || !p) {
+    err.textContent = 'نام کاربری و رمز عبور الزامی است';
+    err.classList.add('show'); return;
+  }
+
+  btn.textContent = 'در حال ورود...';
+  btn.disabled = true;
+
+  API.post('auth.php?action=login', { username: u, password: p }).then(function(data) {
+    if (data.success) {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('app').classList.add('visible');
+      // به‌روزرسانی نام ادمین در sidebar
+      if (data.admin) {
+        var nameEl = document.querySelector('.sb-admin-badge .ai b');
+        if (nameEl) nameEl.textContent = data.admin.name;
+        window._ADMIN = data.admin;
+      }
+      initApp();
+    } else {
+      err.textContent = data.message || 'نام کاربری یا رمز اشتباه است';
+      err.classList.add('show');
+    }
+  }).catch(function() {
+    err.textContent = 'خطا در ارتباط با سرور';
+    err.classList.add('show');
+  }).finally(function() {
+    btn.textContent = 'ورود به پنل';
+    btn.disabled = false;
+  });
+}
+
+// بررسی session هنگام load
+window.addEventListener('load', function() {
+  API.get('auth.php?action=check').then(function(data) {
+    if (data.authenticated) {
+      document.getElementById('loginPage').style.display = 'none';
+      document.getElementById('app').classList.add('visible');
+      if (data.admin) {
+        var nameEl = document.querySelector('.sb-admin-badge .ai b');
+        if (nameEl) nameEl.textContent = data.admin.name;
+        window._ADMIN = data.admin;
+      }
+      initApp();
+    }
+  }).catch(function() {});
+});
+
+// خروج
+function doLogout() {
+  API.post('auth.php?action=logout', {}).then(function() {
+    window.location.reload();
+  });
+}
+
+// اتصال دکمه logout
+document.querySelectorAll('.sb-logout').forEach(function(btn) {
+  btn.addEventListener('click', doLogout);
+});
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+function loadDashboard() {
+  API.get('dashboard.php').then(function(data) {
+    if (!data.success) return;
+    var s = data.stats;
+    // به‌روزرسانی اعداد stat cards
+    var map = {
+      'stat-total':     s.total_requests,
+      'stat-new':       s.new_requests,
+      'stat-confirmed': s.confirmed_requests,
+      'stat-done':      s.done_requests,
+      'stat-styles':    s.active_styles,
+      'stat-views':     s.active_views,
+    };
+    Object.keys(map).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = (map[id] || 0).toLocaleString('fa-IR');
+    });
+
+    // به‌روزرسانی badge sidebar
+    updateRequestBadge(s.new_requests || 0);
+
+    // نمایش درخواست‌های اخیر در داشبورد
+    var recentEl = document.getElementById('recentRequestsList');
+    if (recentEl && data.recent_requests) {
+      recentEl.innerHTML = data.recent_requests.map(function(r) {
+        return '<tr><td><span class="cell-bold">' + esc(r.name) + '</span>'
+          + '<span class="cell-sub">' + esc(r.phone) + '</span></td>'
+          + '<td><span class="badge ' + r.status + '">' + statusLabel(r.status) + '</span></td>'
+          + '<td>' + esc(r.style || '—') + '</td>'
+          + '<td>' + formatDate(r.created_at) + '</td>'
+          + '<td><button class="act-btn view" onclick="goPanel(\'requests\')">مشاهده</button></td></tr>';
+      }).join('');
+    }
+
+    // نمودار هفتگی
+    if (data.weekly_chart) renderWeeklyChart(data.weekly_chart);
+  });
+}
+
+function renderWeeklyChart(rows) {
+  var el = document.getElementById('weeklyChartBars');
+  if (!el) return;
+  var max = Math.max.apply(null, rows.map(function(r) { return r.cnt; })) || 1;
+  var days = ['ش','ی','د','س','چ','پ','ج'];
+  el.innerHTML = rows.map(function(r, i) {
+    var pct = Math.round(r.cnt / max * 100);
+    var d = new Date(r.day);
+    var dayName = days[d.getDay()] || '';
+    return '<div class="chart-bar-wrap">'
+      + '<div class="chart-bar" style="height:' + Math.max(pct, 4) + '%">'
+      + '<span class="cb-tip">' + r.cnt.toLocaleString('fa-IR') + '</span></div>'
+      + '<span class="chart-bar-lbl">' + dayName + '</span></div>';
+  }).join('');
+}
+
+/* ============================================================
+   REQUESTS
+   ============================================================ */
+var REQUESTS_DATA = [];
+var _reqFilter = '';
+
+function loadRequests(filter) {
+  if (filter !== undefined) _reqFilter = filter;
+  var ep = 'requests.php' + (_reqFilter ? '?status=' + _reqFilter : '');
+  API.get(ep).then(function(data) {
+    if (!data.success) return;
+    REQUESTS_DATA = data.data || [];
+    renderRequests();
+    if (data.counts) updateRequestBadge(data.counts.new || 0);
+    // آپدیت فیلتر badge‌ها
+    updateFilterBadges(data.counts || {});
+  });
+}
+
+function updateRequestBadge(count) {
+  document.querySelectorAll('.req-badge').forEach(function(el) {
+    el.textContent = count;
+    el.style.display = count > 0 ? '' : 'none';
+  });
+  // badge sidebar
+  var sb = document.querySelector('.sb-item[onclick*="requests"] .badge');
+  if (sb) { sb.textContent = count; sb.style.display = count > 0 ? '' : 'none'; }
+}
+
+function updateFilterBadges(counts) {
+  Object.keys(counts).forEach(function(k) {
+    var el = document.querySelector('[data-filter-badge="' + k + '"]');
+    if (el) el.textContent = counts[k] || 0;
+  });
+}
+
+function renderRequests() {
+  var wrap = document.getElementById('requestsList');
+  if (!wrap) return;
+  if (!REQUESTS_DATA.length) {
+    wrap.innerHTML = '<div class="empty-state"><div class="es-ic">📭</div><p>درخواستی یافت نشد</p></div>';
+    return;
+  }
+  wrap.innerHTML = REQUESTS_DATA.map(function(r) {
+    var styleNames = {european:'اروپایی',american:'آمریکایی',eastasian:'آسیای شرقی',arabic:'عربی',iranian:'ایرانی'};
+    return '<div class="req-card" id="req-' + r.id + '">'
+      + '<div class="req-head">'
+      + '<h4>' + esc(r.name) + '</h4>'
+      + '<span class="badge ' + r.status + '">' + statusLabel(r.status) + '</span>'
+      + '</div>'
+      + '<div class="req-meta">'
+      + '<span class="req-meta-item"><span class="ri">📞</span>' + esc(r.phone) + '</span>'
+      + (r.email ? '<span class="req-meta-item"><span class="ri">✉</span>' + esc(r.email) + '</span>' : '')
+      + (r.style ? '<span class="req-meta-item"><span class="ri">🏠</span>' + (styleNames[r.style] || r.style) + '</span>' : '')
+      + '<span class="req-meta-item"><span class="ri">🕐</span>' + formatDate(r.created_at) + '</span>'
+      + '</div>'
+      + (r.message ? '<div class="req-note">' + esc(r.message) + '</div>' : '')
+      + (r.admin_note ? '<div class="req-note" style="border-right:3px solid var(--gold)"><b>یادداشت:</b> ' + esc(r.admin_note) + '</div>' : '')
+      + '<div class="req-actions">'
+      + (r.status === 'new'       ? '<button class="act-btn confirm" onclick="changeReqStatus(' + r.id + ',\'pending\')">✓ تأیید اولیه</button>' : '')
+      + (r.status === 'pending'   ? '<button class="act-btn confirm" onclick="changeReqStatus(' + r.id + ',\'confirmed\')">✓ تأیید نهایی</button>' : '')
+      + (r.status === 'confirmed' ? '<button class="act-btn view" onclick="changeReqStatus(' + r.id + ',\'done\')">✓ انجام شد</button>' : '')
+      + (['new','pending','confirmed'].includes(r.status) ? '<button class="act-btn del" onclick="changeReqStatus(' + r.id + ',\'cancelled\')">✕ لغو</button>' : '')
+      + '<button class="act-btn edit" onclick="showReqDetail(' + r.id + ')">👁 جزئیات</button>'
+      + '<button class="act-btn del" style="margin-inline-start:auto" onclick="deleteReq(' + r.id + ')">🗑</button>'
+      + '</div></div>';
+  }).join('');
+}
+
+function changeReqStatus(id, status) {
+  API.put('requests.php', { id: id, status: status }).then(function(data) {
+    if (data.success) {
+      loadRequests();
+      showToast('وضعیت تغییر یافت ✦', 'success');
+    } else {
+      showToast(data.message || 'خطا', 'error');
+    }
+  });
+}
+
+function deleteReq(id) {
+  if (!confirm('این درخواست حذف شود؟')) return;
+  API.delete('requests.php?id=' + id).then(function(data) {
+    if (data.success) { loadRequests(); showToast('درخواست حذف شد', 'success'); }
+  });
+}
+
+function showReqDetail(id) {
+  API.get('requests.php?id=' + id).then(function(data) {
+    if (!data.success || !data.data) return;
+    var r = data.data;
+    var noteHtml = '<div class="field"><label>یادداشت ادمین</label>'
+      + '<textarea id="reqNoteInput" style="min-height:60px">' + esc(r.admin_note || '') + '</textarea></div>'
+      + '<button class="tb-btn primary" onclick="saveReqNote(' + r.id + ')">ذخیره یادداشت</button>';
+    var body = document.getElementById('reqDetailBody');
+    var title = document.getElementById('reqDetailTitle');
+    if (body) body.innerHTML = '<dl style="display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:.85rem">'
+      + '<dt style="color:var(--gold);font-weight:800">نام</dt><dd>' + esc(r.name) + '</dd>'
+      + '<dt style="color:var(--gold);font-weight:800">تلفن</dt><dd>' + esc(r.phone) + '</dd>'
+      + '<dt style="color:var(--gold);font-weight:800">ایمیل</dt><dd>' + esc(r.email || '—') + '</dd>'
+      + '<dt style="color:var(--gold);font-weight:800">سبک</dt><dd>' + esc(r.style || '—') + '</dd>'
+      + '<dt style="color:var(--gold);font-weight:800">پیام</dt><dd>' + esc(r.message || '—') + '</dd>'
+      + '<dt style="color:var(--gold);font-weight:800">وضعیت</dt><dd><span class="badge ' + r.status + '">' + statusLabel(r.status) + '</span></dd>'
+      + '<dt style="color:var(--gold);font-weight:800">IP</dt><dd dir="ltr">' + esc(r.ip_address || '—') + '</dd>'
+      + '<dt style="color:var(--gold);font-weight:800">تاریخ</dt><dd>' + formatDate(r.created_at) + '</dd>'
+      + '</dl><div style="margin-top:16px">' + noteHtml + '</div>';
+    if (title) title.textContent = 'جزئیات درخواست — ' + r.name;
+    openModal('reqDetailModal');
+  });
+}
+
+function saveReqNote(id) {
+  var note = document.getElementById('reqNoteInput');
+  if (!note) return;
+  API.put('requests.php', { id: id, admin_note: note.value }).then(function(data) {
+    if (data.success) { closeModal('reqDetailModal'); loadRequests(); showToast('یادداشت ذخیره شد', 'success'); }
+  });
+}
+
+/* ============================================================
+   STYLES
+   ============================================================ */
+var STYLES_DATA = [];
+
+function loadStyles() {
+  API.get('styles.php').then(function(data) {
+    if (!data.success) return;
+    STYLES_DATA = data.data || [];
+    renderStylesPanel();
+  });
+}
+
+function renderStylesPanel() {
+  var grid = document.getElementById('stylesGrid');
+  if (!grid) return;
+  if (!STYLES_DATA.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="es-ic">🎨</div><p>سبکی ثبت نشده</p></div>';
+    return;
+  }
+  grid.innerHTML = STYLES_DATA.map(function(s) {
+    return '<div class="style-admin-card">'
+      + '<div class="sac-img">'
+      + '<img src="' + esc(s.img1_url || '') + '" alt="' + esc(s.name_fa) + '" onerror="this.style.opacity=.2">'
+      + '<div class="sac-overlay">'
+      + '<button class="act-btn edit" onclick="editStyle(' + s.id + ')">✏ ویرایش</button>'
+      + '<button class="act-btn del" onclick="deleteStyle(' + s.id + ')">🗑 حذف</button>'
+      + '</div></div>'
+      + '<div class="sac-body">'
+      + '<h4>' + esc(s.emoji || '') + ' ' + esc(s.name_fa) + ' — ' + esc(s.name_en) + '</h4>'
+      + '<p>' + esc(s.description_fa || '') + '</p>'
+      + '<div class="sac-status">'
+      + '<span class="badge ' + s.status + '">' + statusLabel(s.status) + '</span>'
+      + '<button class="act-btn ' + (s.status === 'active' ? 'del' : 'confirm') + '" onclick="toggleStyleStatus(' + s.id + ',\'' + s.status + '\')">'
+      + (s.status === 'active' ? 'غیرفعال' : 'فعال') + '</button>'
+      + '</div></div></div>';
+  }).join('');
+}
+
+function toggleStyleStatus(id, currentStatus) {
+  var newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+  API.put('styles.php', { id: id, status: newStatus }).then(function(data) {
+    if (data.success) { loadStyles(); showToast('وضعیت تغییر یافت', 'success'); }
+  });
+}
+
+function deleteStyle(id) {
+  if (!confirm('این سبک حذف شود؟')) return;
+  API.delete('styles.php?id=' + id).then(function(data) {
+    if (data.success) { loadStyles(); showToast('سبک حذف شد', 'success'); }
+  });
+}
+
+function editStyle(id) {
+  var s = STYLES_DATA.find(function(x) { return x.id === id; });
+  if (!s) return;
+  // پر کردن فرم ویرایش
+  ['style_key','name_fa','name_en','tag_fa','tag_en','emoji','sort_order',
+   'img1_url','img2_url','img3_url','img4_url','img5_url','img6_url',
+   'description_fa','description_en','materials_fa','materials_en'].forEach(function(f) {
+    var el = document.getElementById('editStyle_' + f);
+    if (el) el.value = s[f] || '';
+  });
+  var idEl = document.getElementById('editStyle_id');
+  if (idEl) idEl.value = s.id;
+  openModal('editStyleModal');
+}
+
+function saveStyleEdit() {
+  var id = parseInt(document.getElementById('editStyle_id').value);
+  var payload = { id: id };
+  ['name_fa','name_en','tag_fa','tag_en','emoji','sort_order',
+   'img1_url','img2_url','img3_url','img4_url','img5_url','img6_url',
+   'description_fa','description_en','materials_fa','materials_en'].forEach(function(f) {
+    var el = document.getElementById('editStyle_' + f);
+    if (el) payload[f] = el.value;
+  });
+  API.put('styles.php', payload).then(function(data) {
+    if (data.success) {
+      closeModal('editStyleModal');
+      loadStyles();
+      showToast('سبک به‌روز شد ✦', 'success');
+    } else {
+      showToast(data.message || 'خطا', 'error');
+    }
+  });
+}
+
+function addStyle() {
+  var payload = {};
+  ['style_key','name_fa','name_en','tag_fa','tag_en','emoji',
+   'img1_url','img2_url','img3_url','description_fa','description_en'].forEach(function(f) {
+    var el = document.getElementById('newStyle_' + f);
+    if (el) payload[f] = el.value;
+  });
+  if (!payload.style_key || !payload.name_fa) {
+    showToast('کلید سبک و نام فارسی الزامی است', 'error'); return;
+  }
+  API.post('styles.php', payload).then(function(data) {
+    if (data.success) {
+      closeModal('addStyleModal');
+      loadStyles();
+      showToast('سبک اضافه شد ✦', 'success');
+    } else {
+      showToast(data.message || 'خطا', 'error');
+    }
+  });
+}
+
+/* ============================================================
+   VIEWS 3D
+   ============================================================ */
+var VIEWS_DATA = [];
+
+function loadViews() {
+  API.get('views3d.php').then(function(data) {
+    if (!data.success) return;
+    VIEWS_DATA = data.data || [];
+    renderViewsPanel();
+  });
+}
+
+function renderViewsPanel() {
+  var grid = document.getElementById('views3dGrid');
+  if (!grid) return;
+  if (!VIEWS_DATA.length) {
+    grid.innerHTML = '<div class="empty-state"><div class="es-ic">🏗</div><p>نمایی ثبت نشده</p></div>';
+    return;
+  }
+  grid.innerHTML = VIEWS_DATA.map(function(v) {
+    return '<div class="view-card">'
+      + '<div class="vc-preview">'
+      + (v.img_url ? '<img src="' + esc(v.img_url) + '" alt="' + esc(v.name) + '" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display=\'none\'">'
+        : '<div class="vc-placeholder">' + (v.type === '3d' ? '🏠' : '📐') + '</div>')
+      + '</div>'
+      + '<div class="vc-body"><h5>' + esc(v.name) + '</h5>'
+      + '<span>' + (v.type === '3d' ? 'نمای ۳D' : 'نقشه مهندسی') + (v.room ? ' — ' + esc(v.room) : '') + '</span>'
+      + '</div>'
+      + '<div class="vc-foot">'
+      + '<button class="act-btn edit" onclick="editView(' + v.id + ')">✏</button>'
+      + '<button class="act-btn del" onclick="deleteView(' + v.id + ')">🗑</button>'
+      + '<span class="badge ' + v.status + '" style="margin-inline-start:auto">' + statusLabel(v.status) + '</span>'
+      + '</div></div>';
+  }).join('');
+}
+
+function deleteView(id) {
+  if (!confirm('این نما حذف شود؟')) return;
+  API.delete('views3d.php?id=' + id).then(function(data) {
+    if (data.success) { loadViews(); showToast('نما حذف شد', 'success'); }
+  });
+}
+
+function addView() {
+  var payload = {};
+  ['name','type','style_key','room','description','img_url','dimensions'].forEach(function(f) {
+    var el = document.getElementById('newView_' + f);
+    if (el) payload[f] = el.value;
+  });
+  if (!payload.name || !payload.type) {
+    showToast('نام و نوع الزامی است', 'error'); return;
+  }
+  API.post('views3d.php', payload).then(function(data) {
+    if (data.success) {
+      closeModal('addViewModal');
+      loadViews();
+      showToast('نما اضافه شد ✦', 'success');
+    } else {
+      showToast(data.message || 'خطا', 'error');
+    }
+  });
+}
+
+function editView(id) {
+  var v = VIEWS_DATA.find(function(x) { return x.id === id; });
+  if (!v) return;
+  ['name','type','style_key','room','description','img_url','dimensions'].forEach(function(f) {
+    var el = document.getElementById('editView_' + f);
+    if (el) el.value = v[f] || '';
+  });
+  var idEl = document.getElementById('editView_id');
+  if (idEl) idEl.value = v.id;
+  openModal('editViewModal');
+}
+
+function saveViewEdit() {
+  var id = parseInt(document.getElementById('editView_id').value);
+  var payload = { id: id };
+  ['name','type','style_key','room','description','img_url','dimensions'].forEach(function(f) {
+    var el = document.getElementById('editView_' + f);
+    if (el) payload[f] = el.value;
+  });
+  API.put('views3d.php', payload).then(function(data) {
+    if (data.success) {
+      closeModal('editViewModal');
+      loadViews();
+      showToast('نما به‌روز شد ✦', 'success');
+    } else {
+      showToast(data.message || 'خطا', 'error');
+    }
+  });
+}
+
+/* ============================================================
+   SEO
+   ============================================================ */
+var KEYWORDS_API = [];
+
+function loadSeo() {
+  // بارگذاری تنظیمات صفحه home
+  API.get('seo.php?page=home').then(function(data) {
+    if (data.success && data.data) {
+      var d = data.data;
+      var map = {
+        seoTitle: d.meta_title || '',
+        seoDesc:  d.meta_description || '',
+        seoKeywords: d.meta_keywords || '',
+        seoCanonical: d.canonical_url || '',
+        ogTitle: d.og_title || '',
+        ogImage: d.og_image || ''
+      };
+      Object.keys(map).forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.value = map[id];
+      });
+    }
+  });
+  // بارگذاری کلمات کلیدی
+  loadKeywords();
+}
+
+function saveSeoMeta() {
+  var payload = {
+    page_key:         'home',
+    meta_title:       (document.getElementById('seoTitle')     || {}).value || '',
+    meta_description: (document.getElementById('seoDesc')      || {}).value || '',
+    meta_keywords:    (document.getElementById('seoKeywords')  || {}).value || '',
+    canonical_url:    (document.getElementById('seoCanonical') || {}).value || '',
+    og_title:         (document.getElementById('ogTitle')      || {}).value || '',
+    og_image:         (document.getElementById('ogImage')      || {}).value || '',
+  };
+  API.put('seo.php', payload).then(function(data) {
+    if (data.success) showToast('متاتگ‌های SEO ذخیره شد ✦', 'success');
+    else showToast(data.message || 'خطا', 'error');
+  });
+}
+
+function loadKeywords() {
+  API.get('seo.php?keywords=1').then(function(data) {
+    if (!data.success) return;
+    KEYWORDS_API = data.data || [];
+    renderKeywordList();
+  });
+}
+
+// override renderKeywordList (اصل با localStorage بود)
+function renderKeywordList() {
+  var kl = document.getElementById('keywordList');
+  if (!kl) return;
+  if (!KEYWORDS_API.length) {
+    kl.innerHTML = '<div class="empty-state"><p>کلمه کلیدی ثبت نشده</p></div>'; return;
+  }
+  kl.innerHTML = KEYWORDS_API.map(function(k, i) {
+    return '<div class="seo-kw">'
+      + '<span style="font-size:.7rem;font-weight:800;color:var(--ink3);width:20px">' + (i + 1) + '</span>'
+      + '<span class="seo-kw-name">' + esc(k.keyword) + '</span>'
+      + '<div class="seo-kw-bar-wrap"><div class="seo-kw-bar" style="width:' + Math.round(k.search_volume / 8400 * 100) + '%"></div></div>'
+      + '<span class="seo-kw-num">' + (k.search_volume || 0).toLocaleString('fa-IR') + '</span>'
+      + (k.current_rank ? '<span class="tag-pill">رتبه ' + k.current_rank + '</span>' : '')
+      + '<button class="act-btn del" style="padding:3px 8px" onclick="deleteKeyword(' + k.id + ')">✕</button>'
+      + '</div>';
+  }).join('');
+}
+
+// override deleteKeyword
+function deleteKeyword(id) {
+  API.delete('seo.php?keyword_id=' + id).then(function(data) {
+    if (data.success) { loadKeywords(); showToast('کلمه کلیدی حذف شد', 'success'); }
+  });
+}
+
+// override addKeyword
+function addKeyword() {
+  var txt  = (document.getElementById('newKwText')  || {}).value || '';
+  var vol  = parseInt((document.getElementById('newKwVol')   || {}).value) || 0;
+  var comp = parseInt((document.getElementById('newKwComp')  || {}).value) || 0;
+  if (!txt.trim()) { showToast('کلمه کلیدی را وارد کنید', 'error'); return; }
+  API.post('seo.php?keywords=1', { keyword: txt.trim(), search_volume: vol, competition: comp, page_key: 'home' })
+    .then(function(data) {
+      if (data.success) {
+        document.getElementById('newKwText').value = '';
+        document.getElementById('newKwVol').value  = '';
+        document.getElementById('newKwComp').value = '';
+        closeModal('addKwModal');
+        loadKeywords();
+        showToast('کلمه کلیدی اضافه شد ✦', 'success');
+      } else showToast(data.message || 'خطا', 'error');
+    });
+}
+
+/* ============================================================
+   IMAGES
+   ============================================================ */
+var IMG_API_DATA = {};
+
+function loadImagesFromAPI() {
+  API.get('images.php').then(function(data) {
+    if (!data.success) return;
+    (data.data || []).forEach(function(r) {
+      IMG_API_DATA[r.image_key] = r.image_url;
+    });
+    // merge with IMG_DATA
+    Object.assign(IMG_DATA, IMG_API_DATA);
+    refreshImgPanel();
+  });
+}
+
+// override saveImgEdit — ذخیره در API به جای localStorage
+var _origSaveImgEdit = typeof saveImgEdit === 'function' ? saveImgEdit : null;
+function saveImgEdit() {
+  var url = (document.getElementById('imgEditUrl').value || '').trim();
+  if (!url) { showToast('آدرس URL خالی است', 'error'); return; }
+
+  // ذخیره در API
+  API.put('images.php', { image_key: _editingKey, image_url: url }).then(function(data) {
+    if (data.success) {
+      // ذخیره در حافظه محلی هم
+      IMG_DATA[_editingKey] = url;
+      refreshImgPanel();
+      closeModal('imgEditModal');
+      showToast('تصویر ذخیره شد ✦', 'success');
+    } else showToast(data.message || 'خطا', 'error');
+  });
+
+  // اگه فایل آپلود شد (base64) باید از upload.php استفاده کرد
+  if (url.startsWith('data:image/')) {
+    // تبدیل base64 به Blob و ارسال به upload.php
+    var byteString = atob(url.split(',')[1]);
+    var mimeString = url.split(',')[0].split(':')[1].split(';')[0];
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+    var blob = new Blob([ab], { type: mimeString });
+    var formData = new FormData();
+    formData.append('file', blob, 'upload.' + mimeString.split('/')[1]);
+
+    fetch('/api/upload.php', { method: 'POST', credentials: 'same-origin', body: formData })
+      .then(function(r) { return r.json(); })
+      .then(function(uploadData) {
+        if (uploadData.success) {
+          IMG_DATA[_editingKey] = uploadData.url;
+          API.put('images.php', { image_key: _editingKey, image_url: uploadData.url });
+          refreshImgPanel();
+          showToast('تصویر آپلود و ذخیره شد ✦', 'success');
+        }
+      });
+  }
+}
+
+// override resetImg
+function resetImg(key) {
+  API.delete('images.php?key=' + encodeURIComponent(key)).then(function(data) {
+    if (data.success) {
+      delete IMG_DATA[key];
+      refreshImgPanel();
+      showToast('تصویر به پیش‌فرض بازگشت', 'success');
+    }
+  });
+}
+
+// override resetAllStyleImgs
+function resetAllStyleImgs(styleId) {
+  if (!confirm('همه تصاویر سبک ' + styleId + ' به پیش‌فرض برمی‌گردند؟')) return;
+  var slots = ['img1','img2','img3','img4','img5','img6'];
+  var promises = slots.map(function(s) {
+    return API.delete('images.php?key=' + encodeURIComponent(styleId + '_' + s));
+  });
+  Promise.all(promises).then(function() {
+    slots.forEach(function(s) { delete IMG_DATA[styleId + '_' + s]; });
+    refreshImgPanel();
+    showToast('همه تصاویر به پیش‌فرض بازگشتند', 'success');
+  });
+}
+
+/* ============================================================
+   PANEL ROUTER OVERRIDE
+   ============================================================ */
+var _origRenderPanel = typeof renderPanel === 'function' ? renderPanel : function() {};
+function renderPanel(id) {
+  if (id === 'dashboard')  loadDashboard();
+  else if (id === 'requests') loadRequests();
+  else if (id === 'styles')   loadStyles();
+  else if (id === 'views3d')  loadViews();
+  else if (id === 'seo')      loadSeo();
+  else if (id === 'images')   { loadImagesFromAPI(); /* also run original render */ _origRenderPanel(id); return; }
+  _origRenderPanel(id);
+}
+
+/* ============================================================
+   INITAPP OVERRIDE
+   ============================================================ */
+var _origInitApp = typeof initApp === 'function' ? initApp : function() {};
+function initApp() {
+  // بارگذاری اولیه
+  loadDashboard();
+  // اجرای کد اصلی (goPanel + render)
+  _origInitApp();
+}
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function esc(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatDate(dt) {
+  if (!dt) return '—';
+  try {
+    var d = new Date(dt.replace(' ', 'T'));
+    return d.toLocaleDateString('fa-IR') + ' ' + d.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+  } catch (e) { return dt; }
+}
+</script>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="mk">✦</span>
+      <div><h1>دکوراسیون آرتا</h1><span>پنل مدیریت سوپر ادمین</span></div>
+    </div>
+    <h2>ورود به پنل</h2>
+    <p>اطلاعات ورود خود را وارد کنید</p>
+    <div class="form-field">
+      <label>ایمیل</label>
+      <input type="text" id="loginEmail" placeholder="نام کاربری" dir="ltr" autocomplete="username">
+    </div>
+    <div class="form-field">
+      <label>رمز عبور</label>
+      <input type="password" id="loginPass" placeholder="••••••••" dir="ltr" autocomplete="current-password">
+    </div>
+    <button class="btn-login" id="loginBtn" onclick="doLogin()">ورود به پنل</button>
+    <div class="login-err" id="loginErr">ایمیل یا رمز عبور اشتباه است</div>
+  </div>
+</div>
+
+<!-- SCRIM -->
+<div class="sb-scrim" id="sbScrim" onclick="closeSidebar()"></div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-logo">
+        <span class="mk">✦</span>
+        <div><b>دکوراسیون آرتا</b><span>Super Admin Panel</span></div>
+      </div>
+      <div class="sb-admin-badge">
+        <div class="av">R</div>
+        <div class="ai"><b>رخشانی</b><span>super_admin@artadecor</span></div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-section">داشبورد</div>
+      <div class="sb-item active" onclick="goPanel('dashboard')">
+        <span class="ic">📊</span>داشبورد اصلی
+      </div>
+
+      <div class="sb-section">مدیریت محتوا</div>
+      <div class="sb-item" onclick="goPanel('styles')">
+        <span class="ic">🎨</span>مدیریت سبک‌ها
+      </div>
+      <div class="sb-item" onclick="goPanel('views3d')">
+        <span class="ic">🏛</span>نماهای ۳D و مهندسی
+      </div>
+
+      <div class="sb-section">درخواست‌ها</div>
+      <div class="sb-item" onclick="goPanel('requests')">
+        <span class="ic">📋</span>مشاوره‌های دریافتی
+        <span class="badge" id="reqBadge">4</span>
+      </div>
+
+      <div class="sb-section">آنالیز</div>
+      <div class="sb-item" onclick="goPanel('users')">
+        <span class="ic">👁</span>بازدید و کاربران
+      </div>
+      <div class="sb-item" onclick="goPanel('seo')">
+        <span class="ic">🔍</span>تنظیمات SEO
+      </div>
+      <div class="sb-item" onclick="goPanel('images')">
+        <span class="ic">🖼</span>مدیریت تصاویر
+      </div>
+
+      <div class="sb-section">سایت</div>
+      <div class="sb-item" onclick="window.open('index.html','_blank')">
+        <span class="ic">🌐</span>مشاهده سایت
+      </div>
+    </nav>
+    <div class="sb-foot">
+      <button class="sb-logout" onclick="doLogout()">
+        <span class="ic">🚪</span>خروج از پنل
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-area">
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <button class="tb-burger" id="tbBurger" onclick="openSidebar()">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="tb-page-title" id="pageTitle">داشبورد اصلی</span>
+      <div class="tb-actions">
+        <button class="tb-btn" onclick="window.open('index.html','_blank')">
+          <span>🌐</span><span class="tb-label">سایت</span>
+        </button>
+        <button class="tb-btn primary" onclick="showToast('تغییرات ذخیره شد','success')">
+          <span>💾</span><span class="tb-label">ذخیره</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content-area">
+
+      <!-- ======= DASHBOARD ======= -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="sc-icon" style="background:rgba(201,162,90,.12);color:var(--gold)">👁</div>
+            <span class="sc-num"><i id="visitsCount">۲,۴۸۱</i></span>
+            <span class="sc-label">بازدید امروز</span>
+            <span class="sc-trend up">↑ ۱۲٪</span>
+          </div>
+          <div class="stat-card">
+            <div class="sc-icon" style="background:rgba(74,143,136,.12);color:var(--teal)">📋</div>
+            <span class="sc-num" id="reqCount">۴</span>
+            <span class="sc-label">درخواست جدید</span>
+            <span class="sc-trend up">↑ ۲</span>
+          </div>
+          <div class="stat-card">
+            <div class="sc-icon" style="background:rgba(74,156,107,.12);color:#4a9c6b">🏛</div>
+            <span class="sc-num">۵</span>
+            <span class="sc-label">سبک فعال</span>
+            <span class="sc-trend up badge active">فعال</span>
+          </div>
+          <div class="stat-card">
+            <div class="sc-icon" style="background:rgba(74,122,201,.12);color:#6a9ce8">🔍</div>
+            <span class="sc-num">۷۸</span>
+            <span class="sc-label">امتیاز SEO</span>
+            <span class="sc-trend up">خوب</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+          <div style="grid-column:1/-1" class="card">
+            <div class="card-head">
+              <h3><span class="ic">📈</span>بازدید ۷ روز اخیر</h3>
+              <span style="font-size:.75rem;color:var(--ink3)">نفر</span>
+            </div>
+            <div class="card-body">
+              <div class="chart-bars" id="visitChart"></div>
+              <div style="display:flex;justify-content:space-between;padding:0 4px;margin-top:4px" id="visitChartLabels"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div class="card">
+            <div class="card-head">
+              <h3><span class="ic">📋</span>آخرین درخواست‌ها</h3>
+              <button class="act-btn view" onclick="goPanel('requests')">همه</button>
+            </div>
+            <div class="card-body" id="dashRecentReqs"></div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <h3><span class="ic">🔥</span>محبوب‌ترین صفحات</h3>
+            </div>
+            <div class="card-body" id="dashTopPages"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= STYLES ======= -->
+      <div class="panel" id="panel-styles">
+        <div class="tabs">
+          <button class="tab-btn on" onclick="switchTab(this,'styles-list')">لیست سبک‌ها</button>
+          <button class="tab-btn" onclick="switchTab(this,'styles-new')">افزودن سبک</button>
+          <button class="tab-btn" onclick="switchTab(this,'styles-pages')">صفحات سبک</button>
+        </div>
+
+        <!-- STYLES LIST -->
+        <div class="tab-panel active" id="tab-styles-list">
+          <div class="style-admin-grid" id="styleAdminGrid"></div>
+        </div>
+
+        <!-- NEW STYLE -->
+        <div class="tab-panel" id="tab-styles-new">
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">➕</span>افزودن سبک جدید</h3></div>
+            <div class="card-body">
+              <div class="form-row cols-2">
+                <div class="field"><label>نام سبک (فارسی)</label><input type="text" id="newStyleFa" placeholder="مثال: اسکاندیناوی"></div>
+                <div class="field"><label>Style Name (EN)</label><input type="text" id="newStyleEn" placeholder="e.g. Scandinavian" dir="ltr"></div>
+              </div>
+              <div class="form-row cols-2">
+                <div class="field"><label>برچسب (فارسی)</label><input type="text" id="newStyleTagFa" placeholder="مثال: مدرن شمالی"></div>
+                <div class="field"><label>Tag (EN)</label><input type="text" id="newStyleTagEn" placeholder="Modern Nordic" dir="ltr"></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>توضیح کوتاه (فارسی)</label><textarea id="newStyleDescFa" placeholder="توضیح سبک به فارسی..."></textarea></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>Description (EN)</label><textarea id="newStyleDescEn" placeholder="Style description in English..." dir="ltr"></textarea></div>
+              </div>
+              <div class="form-row cols-2">
+                <div class="field"><label>متریال‌ها (فارسی، با کاما جدا کن)</label><input type="text" id="newStyleMatsFa" placeholder="چوب، پارچه، فلز"></div>
+                <div class="field"><label>Materials (EN, comma separated)</label><input type="text" id="newStyleMatsEn" placeholder="Wood, Fabric, Metal" dir="ltr"></div>
+              </div>
+              <div class="form-row cols-3">
+                <div class="field"><label>رنگ دیوار</label><input type="color" id="newStyleWall" value="#f3eee3"></div>
+                <div class="field"><label>رنگ accent</label><input type="color" id="newStyleAccent" value="#c8a25a"></div>
+                <div class="field"><label>رنگ ثانوی</label><input type="color" id="newStyleSecond" value="#4d8f88"></div>
+              </div>
+              <div class="form-row cols-3">
+                <div class="field"><label>URL تصویر اصلی</label><input type="url" id="newStyleImg1" placeholder="https://..." dir="ltr"></div>
+                <div class="field"><label>URL تصویر ۲</label><input type="url" id="newStyleImg2" placeholder="https://..." dir="ltr"></div>
+                <div class="field"><label>URL تصویر ۳</label><input type="url" id="newStyleImg3" placeholder="https://..." dir="ltr"></div>
+              </div>
+              <div class="form-row cols-2">
+                <div class="field"><label>ایموجی</label><input type="text" id="newStyleEmoji" placeholder="🏛"></div>
+                <div class="field"><label>وضعیت</label>
+                  <select id="newStyleStatus">
+                    <option value="active">فعال</option>
+                    <option value="draft">پیش‌نویس</option>
+                  </select>
+                </div>
+              </div>
+              <button class="tb-btn primary" style="width:100%;padding:12px;justify-content:center;font-size:.9rem" onclick="addNewStyle()">✦ ذخیره سبک جدید</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STYLE PAGES -->
+        <div class="tab-panel" id="tab-styles-pages">
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">📄</span>صفحات سبک</h3></div>
+            <div class="card-body">
+              <div class="tbl-wrap">
+                <table>
+                  <thead><tr><th>سبک</th><th>فایل</th><th>وضعیت</th><th>آخرین ویرایش</th><th>عملیات</th></tr></thead>
+                  <tbody id="stylePagesTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= 3D VIEWS ======= -->
+      <div class="panel" id="panel-views3d">
+        <div class="tabs">
+          <button class="tab-btn on" onclick="switchTab(this,'views-3d')">نماهای ۳D</button>
+          <button class="tab-btn" onclick="switchTab(this,'views-eng')">نماهای مهندسی</button>
+          <button class="tab-btn" onclick="switchTab(this,'views-add')">افزودن نما</button>
+        </div>
+        <div class="tab-panel active" id="tab-views-3d">
+          <div class="views-grid" id="views3dGrid"></div>
+        </div>
+        <div class="tab-panel" id="tab-views-eng">
+          <div class="views-grid" id="viewsEngGrid"></div>
+        </div>
+        <div class="tab-panel" id="tab-views-add">
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">➕</span>افزودن نمای جدید</h3></div>
+            <div class="card-body">
+              <div class="form-row cols-2">
+                <div class="field"><label>نام نما</label><input type="text" id="newViewName" placeholder="نشیمن - اروپایی"></div>
+                <div class="field"><label>نوع نما</label>
+                  <select id="newViewType">
+                    <option value="3d">مدل ۳D</option>
+                    <option value="2d">نقشه مهندسی</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row cols-2">
+                <div class="field"><label>سبک</label>
+                  <select id="newViewStyle">
+                    <option value="european">اروپایی</option>
+                    <option value="american">آمریکایی</option>
+                    <option value="eastasian">آسیای شرقی</option>
+                    <option value="arabic">عربی</option>
+                    <option value="iranian">ایرانی</option>
+                  </select>
+                </div>
+                <div class="field"><label>فضا</label>
+                  <select id="newViewRoom">
+                    <option value="living">نشیمن</option>
+                    <option value="bedroom">اتاق خواب</option>
+                    <option value="kitchen">آشپزخانه</option>
+                    <option value="dining">ناهارخوری</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>توضیح</label><textarea id="newViewDesc" placeholder="توضیح نما..."></textarea></div>
+              </div>
+              <div class="form-row">
+                <div class="field"><label>تصویر پیش‌نمایش (URL)</label><input type="url" id="newViewImg" placeholder="https://..." dir="ltr"></div>
+              </div>
+              <div class="form-row cols-2">
+                <div class="field"><label>ابعاد اتاق (عرض×طول)</label><input type="text" id="newViewDims" placeholder="۶.۴ × ۴.۸ متر"></div>
+                <div class="field"><label>وضعیت</label>
+                  <select id="newViewStatus">
+                    <option value="active">فعال</option>
+                    <option value="draft">پیش‌نویس</option>
+                  </select>
+                </div>
+              </div>
+              <button class="tb-btn primary" style="width:100%;padding:12px;justify-content:center;font-size:.9rem" onclick="addNewView()">✦ ذخیره نمای جدید</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= REQUESTS ======= -->
+      <div class="panel" id="panel-requests">
+        <div class="req-filters">
+          <button class="req-filter on" onclick="filterReqs(this,'all')">همه</button>
+          <button class="req-filter" onclick="filterReqs(this,'new')">جدید <span id="newReqCount">۴</span></button>
+          <button class="req-filter" onclick="filterReqs(this,'pending')">در انتظار</button>
+          <button class="req-filter" onclick="filterReqs(this,'confirmed')">تأیید شده</button>
+          <button class="req-filter" onclick="filterReqs(this,'done')">انجام شده</button>
+          <button class="req-filter" onclick="filterReqs(this,'cancelled')">لغو شده</button>
+        </div>
+        <div id="requestsContainer"></div>
+      </div>
+
+      <!-- ======= USERS / VISITS ======= -->
+      <div class="panel" id="panel-users">
+        <div class="user-stats-grid">
+          <div class="us-card">
+            <h4><span class="ic">👁</span>بازدید کل (ماه)</h4>
+            <div class="us-big"><i>۴۸,۲۳۱</i></div>
+            <div class="us-sub">↑ ۱۸٪ نسبت به ماه قبل</div>
+          </div>
+          <div class="us-card">
+            <h4><span class="ic">🆕</span>بازدیدکنندگان منحصربه‌فرد</h4>
+            <div class="us-big"><i>۱۲,۸۵۴</i></div>
+            <div class="us-sub">↑ ۸٪ نسبت به ماه قبل</div>
+          </div>
+          <div class="us-card">
+            <h4><span class="ic">🏛</span>بازدید مدل ۳D</h4>
+            <div class="us-big"><i>۸,۴۴۲</i></div>
+            <div class="us-sub">۱۷٪ از کل بازدیدها</div>
+          </div>
+          <div class="us-card">
+            <h4><span class="ic">⏱</span>میانگین زمان در سایت</h4>
+            <div class="us-big">۳:۲۴</div>
+            <div class="us-sub">دقیقه</div>
+          </div>
+          <div class="us-card">
+            <h4><span class="ic">📱</span>موبایل / دسکتاپ</h4>
+            <div class="us-big">۶۸٪</div>
+            <div class="us-sub">موبایل | ۳۲٪ دسکتاپ</div>
+            <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:68%"></div></div>
+          </div>
+          <div class="us-card">
+            <h4><span class="ic">🔄</span>نرخ بازگشت</h4>
+            <div class="us-big"><i>۴۲٪</i></div>
+            <div class="us-sub">کاربران بازگشتی</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">📄</span>بازدید صفحات</h3></div>
+            <div class="card-body">
+              <div class="page-visits-list" id="pageVisitsList"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">🏛</span>بازدید مدل‌های ۳D</h3></div>
+            <div class="card-body">
+              <div class="page-visits-list" id="modelVisitsList"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3><span class="ic">📊</span>بازدید ۳۰ روز اخیر</h3></div>
+          <div class="card-body">
+            <div class="chart-bars" id="monthChart" style="height:160px"></div>
+            <div style="display:flex;justify-content:space-between;padding:0 4px;margin-top:4px" id="monthChartLabels"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======= SEO ======= -->
+      <div class="panel" id="panel-seo">
+        <div class="seo-tabs">
+          <button class="seo-tab on" onclick="switchSeoTab(this,'seo-overview')">نمای کلی</button>
+          <button class="seo-tab" onclick="switchSeoTab(this,'seo-meta')">متا تگ‌ها</button>
+          <button class="seo-tab" onclick="switchSeoTab(this,'seo-keywords')">کلمات کلیدی</button>
+          <button class="seo-tab" onclick="switchSeoTab(this,'seo-technical')">فنی</button>
+        </div>
+
+        <!-- SEO OVERVIEW -->
+        <div class="seo-tab-panel active" id="tab-seo-overview">
+          <div class="seo-score">
+            <div class="seo-circle" id="seoCircle">
+              <span class="score-num" style="color:var(--gold)">۷۸</span>
+            </div>
+            <div class="seo-info">
+              <h4>امتیاز SEO سایت: خوب</h4>
+              <p>۱۸ مورد بررسی شده · ۱۲ مورد تأیید · ۴ اخطار · ۲ خطا</p>
+              <div style="margin-top:10px;display:flex;gap:12px;flex-wrap:wrap">
+                <span style="display:flex;align-items:center;gap:5px;font-size:.75rem;color:#4a9c6b">✓ ۱۲ تأیید</span>
+                <span style="display:flex;align-items:center;gap:5px;font-size:.75rem;color:var(--gold)">⚠ ۴ اخطار</span>
+                <span style="display:flex;align-items:center;gap:5px;font-size:.75rem;color:#e88">✗ ۲ خطا</span>
+              </div>
+            </div>
+          </div>
+          <div class="seo-checks" id="seoChecks"></div>
+        </div>
+
+        <!-- META TAGS -->
+        <div class="seo-tab-panel" id="tab-seo-meta">
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">🏷</span>متا تگ‌های صفحه اصلی</h3></div>
+            <div class="card-body seo-meta-fields">
+              <div class="field">
+                <label>عنوان صفحه (Title Tag)</label>
+                <input type="text" id="seoTitle" value="دکوراسیون آرتا | استودیو طراحی دکوراسیون منزل" maxlength="60" oninput="updateCharCount(this,'seoTitleCount',50,60)">
+                <div class="seo-char-counter ok" id="seoTitleCount">۵۲ / ۶۰ کاراکتر</div>
+              </div>
+              <div class="field">
+                <label>توضیح متا (Meta Description)</label>
+                <textarea id="seoDesc" maxlength="160" rows="3" oninput="updateCharCount(this,'seoDescCount',140,160)">از مشاوره تا اجرا؛ دکوراسیون آرتا با پنج سبک جهانی — اروپایی، آمریکایی، آسیای شرقی، عربی و ایرانی — خانه رویایی شما را طراحی می‌کند.</textarea>
+                <div class="seo-char-counter ok" id="seoDescCount">۱۴۸ / ۱۶۰ کاراکتر</div>
+              </div>
+              <div class="field">
+                <label>کلمات کلیدی (Keywords)</label>
+                <input type="text" id="seoKeywords" value="دکوراسیون منزل، طراحی داخلی، دکوراسیون آرتا، سبک اروپایی، دکوراسیون ایرانی">
+              </div>
+              <div class="field">
+                <label>Canonical URL</label>
+                <input type="url" id="seoCanonical" value="https://artadecor.ir/" dir="ltr">
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+                <div class="field">
+                  <label>OG Title</label>
+                  <input type="text" id="ogTitle" value="دکوراسیون آرتا | خانه رویایی شما">
+                </div>
+                <div class="field">
+                  <label>OG Image URL</label>
+                  <input type="url" id="ogImage" placeholder="https://artadecor.ir/og.jpg" dir="ltr">
+                </div>
+              </div>
+              <button class="tb-btn primary" style="width:100%;padding:12px;justify-content:center" onclick="saveSeoMeta()">💾 ذخیره متاتگ‌ها</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- KEYWORDS -->
+        <div class="seo-tab-panel" id="tab-seo-keywords">
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-head"><h3><span class="ic">🔑</span>کلمات کلیدی هدف</h3><button class="act-btn edit" onclick="showAddKeywordModal()">+ افزودن</button></div>
+            <div class="card-body"><div class="seo-keyword-list" id="keywordList"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">📈</span>فرصت‌های کلیدی پیشنهادی</h3></div>
+            <div class="card-body"><div class="seo-keyword-list" id="kwOpportunities"></div></div>
+          </div>
+        </div>
+
+        <!-- TECHNICAL -->
+        <div class="seo-tab-panel" id="tab-seo-technical">
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">⚙</span>بررسی فنی SEO</h3></div>
+            <div class="card-body">
+              <div class="seo-checks" id="techChecks"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ======= IMAGE MANAGER ======= -->
+      <div class="panel" id="panel-images">
+        <div class="tabs" id="imgTabs">
+          <button class="tab-btn on" onclick="switchTab(this,'img-main')">صفحه اصلی</button>
+          <button class="tab-btn" onclick="switchTab(this,'img-european')">🏛 اروپایی</button>
+          <button class="tab-btn" onclick="switchTab(this,'img-american')">🏡 آمریکایی</button>
+          <button class="tab-btn" onclick="switchTab(this,'img-eastasian')">⛩ آسیای شرقی</button>
+          <button class="tab-btn" onclick="switchTab(this,'img-arabic')">🕌 عربی</button>
+          <button class="tab-btn" onclick="switchTab(this,'img-iranian')">🏺 ایرانی</button>
+        </div>
+
+        <!-- MAIN PAGE IMAGES -->
+        <div class="tab-panel active" id="tab-img-main">
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-head"><h3><span class="ic">🖼</span>تصویر Hero (صفحه اصلی)</h3></div>
+            <div class="card-body">
+              <div class="img-manager-block" data-key="site_hero" data-label="تصویر Hero">
+                <div class="imb-preview-wrap">
+                  <img class="imb-preview" id="prev_site_hero" src="" alt="hero preview">
+                  <div class="imb-overlay">
+                    <button class="act-btn edit" onclick="openImgEdit('site_hero','تصویر Hero صفحه اصلی')">✏ تغییر</button>
+                    <button class="act-btn del" onclick="resetImg('site_hero')">↺ پیش‌فرض</button>
+                  </div>
+                </div>
+                <div class="imb-meta">
+                  <span class="imb-label">Hero — صفحه اصلی</span>
+                  <span class="imb-url" id="url_site_hero"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3><span class="ic">🖼</span>تصویر خدمات (Services)</h3></div>
+            <div class="card-body">
+              <div class="img-manager-block" data-key="site_services" data-label="تصویر خدمات">
+                <div class="imb-preview-wrap">
+                  <img class="imb-preview" id="prev_site_services" src="" alt="services preview">
+                  <div class="imb-overlay">
+                    <button class="act-btn edit" onclick="openImgEdit('site_services','تصویر خدمات')">✏ تغییر</button>
+                    <button class="act-btn del" onclick="resetImg('site_services')">↺ پیش‌فرض</button>
+                  </div>
+                </div>
+                <div class="imb-meta">
+                  <span class="imb-label">Services — صفحه اصلی</span>
+                  <span class="imb-url" id="url_site_services"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PER-STYLE IMAGE TABS -->
+        <div class="tab-panel" id="tab-img-european"><div class="style-img-tab" data-style="european"></div></div>
+        <div class="tab-panel" id="tab-img-american"><div class="style-img-tab" data-style="american"></div></div>
+        <div class="tab-panel" id="tab-img-eastasian"><div class="style-img-tab" data-style="eastasian"></div></div>
+        <div class="tab-panel" id="tab-img-arabic"><div class="style-img-tab" data-style="arabic"></div></div>
+        <div class="tab-panel" id="tab-img-iranian"><div class="style-img-tab" data-style="iranian"></div></div>
+      </div>
+
+    </div><!-- /content-area -->
+  </div><!-- /main-area -->
+</div><!-- /app -->
+
+<!-- MODALS -->
+<div class="modal-bg" id="styleEditModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="styleEditTitle">ویرایش سبک</h3>
+      <button class="modal-close" onclick="closeModal('styleEditModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editStyleId">
+      <div class="form-row cols-2">
+        <div class="field"><label>نام (فارسی)</label><input type="text" id="editStyleFa"></div>
+        <div class="field"><label>Name (EN)</label><input type="text" id="editStyleEn" dir="ltr"></div>
+      </div>
+      <div class="form-row cols-2">
+        <div class="field"><label>برچسب (فارسی)</label><input type="text" id="editStyleTagFa"></div>
+        <div class="field"><label>Tag (EN)</label><input type="text" id="editStyleTagEn" dir="ltr"></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>توضیح (فارسی)</label><textarea id="editStyleDescFa"></textarea></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>Description (EN)</label><textarea id="editStyleDescEn" dir="ltr"></textarea></div>
+      </div>
+      <div class="form-row cols-2">
+        <div class="field"><label>متریال‌ها (فارسی)</label><input type="text" id="editStyleMatsFa"></div>
+        <div class="field"><label>Materials (EN)</label><input type="text" id="editStyleMatsEn" dir="ltr"></div>
+      </div>
+      <div class="form-row cols-2">
+        <div class="field"><label>URL تصویر اصلی</label><input type="url" id="editStyleImg" dir="ltr"></div>
+        <div class="field"><label>وضعیت</label>
+          <select id="editStyleStatus">
+            <option value="active">فعال</option>
+            <option value="draft">پیش‌نویس</option>
+            <option value="inactive">غیرفعال</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="tb-btn" onclick="closeModal('styleEditModal')">انصراف</button>
+      <button class="tb-btn primary" onclick="saveStyleEdit()">💾 ذخیره</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="viewEditModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>ویرایش نما</h3>
+      <button class="modal-close" onclick="closeModal('viewEditModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editViewId">
+      <div class="form-row cols-2">
+        <div class="field"><label>نام نما</label><input type="text" id="editViewName"></div>
+        <div class="field"><label>نوع</label>
+          <select id="editViewType">
+            <option value="3d">مدل ۳D</option>
+            <option value="2d">نقشه مهندسی</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row cols-2">
+        <div class="field"><label>سبک</label>
+          <select id="editViewStyle">
+            <option value="european">اروپایی</option>
+            <option value="american">آمریکایی</option>
+            <option value="eastasian">آسیای شرقی</option>
+            <option value="arabic">عربی</option>
+            <option value="iranian">ایرانی</option>
+          </select>
+        </div>
+        <div class="field"><label>فضا</label>
+          <select id="editViewRoom">
+            <option value="living">نشیمن</option>
+            <option value="bedroom">اتاق خواب</option>
+            <option value="kitchen">آشپزخانه</option>
+            <option value="dining">ناهارخوری</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label>وضعیت</label>
+          <select id="editViewStatus">
+            <option value="active">فعال</option>
+            <option value="draft">پیش‌نویس</option>
+            <option value="inactive">غیرفعال</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="tb-btn" onclick="closeModal('viewEditModal')">انصراف</button>
+      <button class="tb-btn primary" onclick="saveViewEdit()">💾 ذخیره</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="reqModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="reqModalTitle">جزئیات درخواست</h3>
+      <button class="modal-close" onclick="closeModal('reqModal')">✕</button>
+    </div>
+    <div class="modal-body" id="reqModalBody"></div>
+    <div class="modal-foot" id="reqModalFoot"></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="addKwModal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-head">
+      <h3>افزودن کلمه کلیدی</h3>
+      <button class="modal-close" onclick="closeModal('addKwModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field"><label>کلمه کلیدی</label><input type="text" id="newKwText" placeholder="مثال: دکوراسیون مدرن"></div>
+      <div class="form-row cols-2" style="margin-top:14px">
+        <div class="field"><label>حجم جستجو</label><input type="number" id="newKwVol" placeholder="۱۰۰۰"></div>
+        <div class="field"><label>رقابت (۰-۱۰۰)</label><input type="number" id="newKwComp" placeholder="۴۵" min="0" max="100"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="tb-btn" onclick="closeModal('addKwModal')">انصراف</button>
+      <button class="tb-btn primary" onclick="addKeyword()">+ افزودن</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+"use strict";
+
+/* ======================================================
+   DATA STORE (localStorage-backed)
+   ====================================================== */
+function loadStore(key, def){try{const v=localStorage.getItem('arta_admin_'+key);return v?JSON.parse(v):def}catch(e){return def}}
+function saveStore(key,val){try{localStorage.setItem('arta_admin_'+key,JSON.stringify(val))}catch(e){}}
+
+var STYLES_DATA = loadStore('styles', [
+  {id:'european',fa:'اروپایی',en:'European',tagFa:'کلاسیک پاریسی',tagEn:'Parisian Classic',emoji:'🏛',
+   descFa:'تقارن آرام، قاب‌ها و قرنیزهای گچ‌بری، پالت کرم و طلایی با لمس مخمل.',
+   descEn:'Quiet symmetry, plaster moldings, cream-and-gold palette.',
+   matsFa:'چوب بلوط، گچ‌بری، مخمل، برنج',matsEn:'Oak, Plaster molding, Velvet, Brass',
+   img:'https://image.qwenlm.ai/public_source/5870f94c-74bc-42c5-a64c-17c3942a7aff/1b042aaac-9832-43fa-8882-4a8970b70c2b.png',
+   status:'active',page:'style_european.html'},
+  {id:'american',fa:'آمریکایی',en:'American',tagFa:'مدرن آمریکایی',tagEn:'Modern American',emoji:'🏡',
+   descFa:'چوب گرم، کابینت سفید و راحتی بی‌تکلف خانه‌های حومه.',
+   descEn:'Warm wood, white shaker cabinetry and suburban comfort.',
+   matsFa:'چوب گردو، کتان، تیر چوبی، سرامیک مات',matsEn:'Walnut, Linen, Wood beams, Matte ceramic',
+   img:'https://image.qwenlm.ai/public_source/5870f94c-74bc-42c5-a64c-17c3942a7aff/195bd2857-3bb5-4eb2-9f97-8aa6821408cf.png',
+   status:'active',page:'style_american.html'},
+  {id:'eastasian',fa:'آسیای شرقی',en:'East Asian',tagFa:'ذن و جاپاندی',tagEn:'Zen · Japandi',emoji:'⛩',
+   descFa:'مینیمالیسم گرم، چوب روشن، نور ملایم و فضای تنفس.',
+   descEn:'Warm minimalism, light wood, soft light and breathing space.',
+   matsFa:'چوب روشن، کاغذ برنجی، بامبو، کتان طبیعی',matsEn:'Light oak, Rice paper, Bamboo, Natural linen',
+   img:'https://image.qwenlm.ai/public_source/5870f94c-74bc-42c5-a64c-17c3942a7aff/19a46a0c8-393c-4e03-9fd8-d57299ddac30.png',
+   status:'active',page:'style_eastasian.html'},
+  {id:'arabic',fa:'عربی',en:'Arabic',tagFa:'مجلس و مراکشی',tagEn:'Majlis · Moroccan',emoji:'🕌',
+   descFa:'طاق‌ها، فانوس‌های برنجی و رنگ‌های عمیق فیروزه‌ای و طلایی.',
+   descEn:'Arches, brass lanterns and deep teal-and-gold tones.',
+   matsFa:'زلایج، برنج، چوب گردو، کاشی دست‌ساز',matsEn:'Zellige, Brass, Walnut, Handmade tile',
+   img:'https://image.qwenlm.ai/public_source/5870f94c-74bc-42c5-a64c-17c3942a7aff/126388177-f1a9-47ff-b7a4-a359a655b84c.png',
+   status:'active',page:'style_arabic.html'},
+  {id:'iranian',fa:'ایرانی',en:'Iranian',tagFa:'ایرانی معاصر',tagEn:'Contemporary Persian',emoji:'🏺',
+   descFa:'فیروزه‌ای و آجر، فرش دستباف و چوب گردو؛ اصالت در قالب امروز.',
+   descEn:'Turquoise and brick, handwoven rugs and walnut.',
+   matsFa:'کاشی فیروزه‌ای، آجر، فرش دستباف، گردو',matsEn:'Turquoise tile, Brick, Handwoven rug, Walnut',
+   img:'https://image.qwenlm.ai/public_source/5870f94c-74bc-42c5-a64c-17c3942a7aff/1dc6b4d1d-4d5e-4e38-9b0a-ec8d55c7264c.png',
+   status:'active',page:'style_iranian.html'}
+]);
+
+var VIEWS_DATA = loadStore('views3d', [
+  {id:'v1',name:'نشیمن اروپایی - ۳D',type:'3d',style:'european',room:'living',status:'active',dims:'۶.۴×۴.۸م',desc:'مدل سه‌بعدی کامل نشیمن سبک اروپایی'},
+  {id:'v2',name:'اتاق خواب آمریکایی - ۳D',type:'3d',style:'american',room:'bedroom',status:'active',dims:'۵.۲×۴.۴م',desc:''},
+  {id:'v3',name:'آشپزخانه آسیای شرقی - ۳D',type:'3d',style:'eastasian',room:'kitchen',status:'active',dims:'۴.۸×۳.۶م',desc:''},
+  {id:'v4',name:'ناهارخوری عربی - ۳D',type:'3d',style:'arabic',room:'dining',status:'active',dims:'۴.۶×۴.۰م',desc:''},
+  {id:'v5',name:'نشیمن ایرانی - ۳D',type:'3d',style:'iranian',room:'living',status:'active',dims:'۶.۴×۴.۸م',desc:''},
+  {id:'v6',name:'نشیمن اروپایی - پلان',type:'2d',style:'european',room:'living',status:'active',dims:'۶.۴×۴.۸م',desc:'نقشه مهندسی نشیمن اروپایی'},
+  {id:'v7',name:'اتاق خواب اروپایی - پلان',type:'2d',style:'european',room:'bedroom',status:'active',dims:'۵.۲×۴.۴م',desc:''},
+  {id:'v8',name:'آشپزخانه عربی - پلان',type:'2d',style:'arabic',room:'kitchen',status:'draft',dims:'۴.۸×۳.۶م',desc:''}
+]);
+
+var REQUESTS_DATA = loadStore('requests', [
+  {id:'r1',name:'علی رضایی',phone:'09121234567',email:'ali@example.com',style:'european',msg:'می‌خواهم دکوراسیون سالن پذیرایی ۴۰ متری منزلم رو سبک اروپایی کنم. بودجه مشخص نیست.',status:'new',date:'۱۴۰۳/۰۶/۱۵',time:'۱۴:۲۳'},
+  {id:'r2',name:'مریم احمدی',phone:'09351234567',email:'maryam@gmail.com',style:'iranian',msg:'دنبال طراحی کل آپارتمان ۱۲۰ متری هستم.',status:'new',date:'۱۴۰۳/۰۶/۱۴',time:'۱۰:۵۵'},
+  {id:'r3',name:'حسین محمدی',phone:'09191234567',email:'',style:'american',msg:'مشاوره تلفنی برای اتاق خواب',status:'pending',date:'۱۴۰۳/۰۶/۱۲',time:'۱۶:۳۰'},
+  {id:'r4',name:'زهرا کریمی',phone:'09011234567',email:'zahra@test.ir',style:'eastasian',msg:'پروژه دفتر کار ۶۰ متری',status:'new',date:'۱۴۰۳/۰۶/۱۱',time:'۰۹:۱۰'},
+  {id:'r5',name:'رضا جعفری',phone:'09301234567',email:'reza@co.ir',style:'arabic',msg:'طراحی ویلای ۳۰۰ متری در شمال',status:'confirmed',date:'۱۴۰۳/۰۶/۰۸',time:'۱۱:۴۵'},
+  {id:'r6',name:'نگار شریفی',phone:'09121111111',email:'',style:'european',msg:'تجدید دکوراسیون آپارتمان قدیمی',status:'done',date:'۱۴۰۳/۰۶/۰۱',time:'۱۳:۰۰'}
+]);
+
+var KEYWORDS_DATA = loadStore('keywords', [
+  {kw:'دکوراسیون داخلی',vol:8400,comp:72,pos:3},
+  {kw:'طراحی داخلی منزل',vol:6200,comp:65,pos:5},
+  {kw:'دکوراسیون اروپایی',vol:3100,comp:48,pos:2},
+  {kw:'سبک ژاپنی دکوراسیون',vol:2800,comp:42,pos:4},
+  {kw:'دکوراسیون ایرانی مدرن',vol:2400,comp:55,pos:6}
+]);
+
+var SEO_META = loadStore('seo_meta', {
+  title:'دکوراسیون آرتا | استودیو طراحی دکوراسیون منزل',
+  desc:'از مشاوره تا اجرا؛ دکوراسیون آرتا با پنج سبک جهانی خانه رویایی شما را طراحی می‌کند.',
+  keywords:'دکوراسیون منزل، طراحی داخلی، دکوراسیون آرتا',
+  canonical:'https://artadecor.ir/',
+  ogTitle:'دکوراسیون آرتا | خانه رویایی شما',
+  ogImage:''
+});
+
+/* ======================================================
+   AUTH (از API PHP استفاده می‌شود — اطلاعات اینجا نیست)
+   ====================================================== */
+
+document.getElementById('loginEmail').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('loginPass').focus()});
+document.getElementById('loginPass').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+
+// Auto-login: session را از سرور چک می‌کنیم
+(function(){
+  API.get('auth.php?action=check').then(function(data){
+    if(data && data.authenticated){
+      document.getElementById('loginPage').style.display='none';
+      document.getElementById('app').classList.add('visible');
+      if(data.admin){
+        var nameEl = document.querySelector('.sb-admin-badge .ai b');
+        if(nameEl) nameEl.textContent = data.admin.name;
+        window._ADMIN = data.admin;
+      }
+      initApp();
+    }
+  }).catch(function(){});
+})();
+
+/* ======================================================
+   NAVIGATION
+   ====================================================== */
+var _currentPanel = 'dashboard';
+function goPanel(id){
+  _currentPanel = id;
+  document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+  var el = document.getElementById('panel-'+id);
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(function(i){i.classList.remove('active')});
+  var titles = {
+    dashboard:'داشبورد اصلی',styles:'مدیریت سبک‌ها',views3d:'نماهای ۳D و مهندسی',
+    requests:'مشاوره‌های دریافتی',users:'بازدید و کاربران',seo:'تنظیمات SEO',images:'مدیریت تصاویر'
+  };
+  document.getElementById('pageTitle').textContent = titles[id]||'';
+  // mark active sidebar item
+  var items = document.querySelectorAll('.sb-item');
+  items.forEach(function(it){
+    var oc = it.getAttribute('onclick')||'';
+    if(oc.indexOf("'"+id+"'")>-1) it.classList.add('active');
+  });
+  closeSidebar();
+  renderPanel(id);
+}
+
+function openSidebar(){
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sbScrim').classList.add('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sbScrim').classList.remove('show');
+}
+
+/* ======================================================
+   TABS
+   ====================================================== */
+function switchTab(btn, panelId){
+  var tabGroup = btn.closest('.tabs');
+  tabGroup.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  // find sibling panels — look for the next siblings that are tab-panels
+  var area = btn.closest('.panel') || document.body;
+  area.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active')});
+  var target = document.getElementById('tab-'+panelId);
+  if(target) target.classList.add('active');
+}
+
+function switchSeoTab(btn, id){
+  document.querySelectorAll('.seo-tab').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  document.querySelectorAll('.seo-tab-panel').forEach(function(p){p.classList.remove('active')});
+  var el=document.getElementById('tab-'+id);
+  if(el) el.classList.add('active');
+}
+
+/* ======================================================
+   MODALS
+   ====================================================== */
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+function openModal(id){document.getElementById(id).classList.add('open')}
+// close on background click
+document.querySelectorAll('.modal-bg').forEach(function(mb){
+  mb.addEventListener('click',function(e){if(e.target===mb)mb.classList.remove('open')});
+});
+
+/* ======================================================
+   TOAST
+   ====================================================== */
+function showToast(msg, type){
+  type = type||'success';
+  var wrap = document.getElementById('toastWrap');
+  var icons = {success:'✅',error:'❌',info:'ℹ️'};
+  var t = document.createElement('div');
+  t.className = 'toast '+type;
+  t.innerHTML = '<span class="t-ic">'+icons[type]+'</span><span>'+msg+'</span>';
+  wrap.appendChild(t);
+  requestAnimationFrame(function(){requestAnimationFrame(function(){t.classList.add('show')})});
+  setTimeout(function(){t.classList.remove('show');setTimeout(function(){t.remove()},500)},3000);
+}
+
+/* ======================================================
+   CHART RENDERER
+   ====================================================== */
+function renderBarChart(containerId, labelId, data, labels, color){
+  var c = document.getElementById(containerId);
+  var l = labelId ? document.getElementById(labelId) : null;
+  if(!c) return;
+  var max = Math.max.apply(null, data.map(function(d){return d.val||d}));
+  c.innerHTML = data.map(function(d,i){
+    var val = d.val||d;
+    var lbl = d.lbl||labels[i]||'';
+    var pct = max>0 ? Math.round((val/max)*100) : 0;
+    return '<div class="chart-bar-wrap"><div class="chart-bar" style="height:'+pct+'%;background:'+(color||'rgba(201,162,90,.25)')+'"><div class="cb-tip">'+val+'</div></div><span class="chart-bar-lbl">'+lbl+'</span></div>';
+  }).join('');
+  if(l) l.innerHTML = '';
+}
+
+/* ======================================================
+   DASHBOARD
+   ====================================================== */
+function renderDashboard(){
+  var visitData = [
+    {val:1840,lbl:'شنبه'},{val:2100,lbl:'یکشنبه'},{val:1650,lbl:'دوشنبه'},
+    {val:2350,lbl:'سه‌شنبه'},{val:1980,lbl:'چهارشنبه'},{val:2480,lbl:'پنج‌شنبه'},{val:2100,lbl:'جمعه'}
+  ];
+  renderBarChart('visitChart', null, visitData, [], 'rgba(201,162,90,.3)');
+  // Animate chart bars
+  setTimeout(function(){
+    document.querySelectorAll('#visitChart .chart-bar').forEach(function(b){
+      b.style.background='var(--gold)';b.style.opacity='.7';
+    });
+  },200);
+
+  // recent requests
+  var rr = document.getElementById('dashRecentReqs');
+  if(rr){
+    var newReqs = REQUESTS_DATA.filter(function(r){return r.status==='new'||r.status==='pending'}).slice(0,3);
+    rr.innerHTML = newReqs.map(function(r){
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)">'
+        +'<div><span style="font-size:.85rem;font-weight:700;color:var(--ink)">'+r.name+'</span>'
+        +'<span style="display:block;font-size:.72rem;color:var(--ink3)">'+r.date+'</span></div>'
+        +'<span class="badge '+r.status+'">'+statusLabel(r.status)+'</span>'
+        +'</div>';
+    }).join('') || '<div class="empty-state"><div class="es-ic">📭</div><p>درخواست جدیدی ندارید</p></div>';
+  }
+
+  // top pages
+  var tp = document.getElementById('dashTopPages');
+  if(tp){
+    var pages=[
+      {n:'صفحه اصلی',v:2481},{n:'گالری تعاملی',v:1842},{n:'سبک اروپایی',v:944},
+      {n:'سبک ایرانی',v:821},{n:'تماس',v:612}
+    ];
+    var mx=pages[0].v;
+    tp.innerHTML=pages.map(function(p){
+      return '<div class="pv-item"><span class="pv-name">'+p.n+'</span>'
+        +'<div class="pv-bar-wrap"><div class="pv-bar" style="width:'+Math.round(p.v/mx*100)+'%;background:var(--teal)"></div></div>'
+        +'<span class="pv-num">'+p.v+'</span></div>';
+    }).join('');
+  }
+
+  // update badges
+  var newCount = REQUESTS_DATA.filter(function(r){return r.status==='new'}).length;
+  var rb = document.getElementById('reqBadge');
+  if(rb) rb.textContent = newCount||'';
+  if(rb) rb.style.display = newCount?'':'none';
+  var rc = document.getElementById('reqCount');
+  if(rc) rc.textContent = newCount;
+  var nrc = document.getElementById('newReqCount');
+  if(nrc) nrc.textContent = newCount;
+}
+
+/* ======================================================
+   STYLES PANEL
+   ====================================================== */
+function renderStylesPanel(){
+  renderStyleAdminGrid();
+  renderStylePagesTable();
+}
+
+function renderStyleAdminGrid(){
+  var grid = document.getElementById('styleAdminGrid');
+  if(!grid) return;
+  grid.innerHTML = STYLES_DATA.map(function(s){
+    return '<div class="style-admin-card" data-id="'+s.id+'">'
+      +'<div class="sac-img"><img src="'+s.img+'" alt="'+s.fa+'" loading="lazy">'
+      +'<div class="sac-overlay">'
+      +'<button class="act-btn edit" onclick="editStyle(\''+s.id+'\')">✏ ویرایش</button>'
+      +'<button class="act-btn del" onclick="deleteStyle(\''+s.id+'\')">🗑 حذف</button>'
+      +'</div></div>'
+      +'<div class="sac-body">'
+      +'<h4>'+s.emoji+' '+s.fa+' <small style="color:var(--ink3);font-weight:600;font-size:.75rem">/ '+s.en+'</small></h4>'
+      +'<p>'+s.descFa+'</p>'
+      +'<div class="sac-status">'
+      +'<span class="badge '+(s.status==='active'?'active':'inactive')+'">'+statusLabel(s.status)+'</span>'
+      +'<div style="display:flex;gap:5px">'
+      +'<a class="act-btn view" href="'+s.page+'" target="_blank">🔗</a>'
+      +'<button class="act-btn edit" onclick="editStyle(\''+s.id+'\')">ویرایش</button>'
+      +'</div></div></div></div>';
+  }).join('');
+}
+
+function renderStylePagesTable(){
+  var tb = document.getElementById('stylePagesTable');
+  if(!tb) return;
+  tb.innerHTML = STYLES_DATA.map(function(s){
+    return '<tr><td><span style="font-size:1.1rem">'+s.emoji+'</span> <span class="cell-bold">'+s.fa+'</span><span class="cell-sub">'+s.en+'</span></td>'
+      +'<td dir="ltr" style="font-size:.75rem;color:var(--gold)"><a href="'+s.page+'" target="_blank" style="color:var(--gold)">'+s.page+'</a></td>'
+      +'<td><span class="badge '+(s.status==='active'?'active':'inactive')+'">'+statusLabel(s.status)+'</span></td>'
+      +'<td style="font-size:.75rem;color:var(--ink3)">امروز</td>'
+      +'<td><div class="act-btn-group">'
+      +'<button class="act-btn edit" onclick="editStyle(\''+s.id+'\')">ویرایش</button>'
+      +'<a class="act-btn view" href="'+s.page+'" target="_blank">مشاهده</a>'
+      +'</div></td></tr>';
+  }).join('');
+}
+
+function editStyle(id){
+  var s = STYLES_DATA.find(function(x){return x.id===id});
+  if(!s) return;
+  document.getElementById('editStyleId').value = id;
+  document.getElementById('editStyleFa').value = s.fa;
+  document.getElementById('editStyleEn').value = s.en;
+  document.getElementById('editStyleTagFa').value = s.tagFa;
+  document.getElementById('editStyleTagEn').value = s.tagEn;
+  document.getElementById('editStyleDescFa').value = s.descFa;
+  document.getElementById('editStyleDescEn').value = s.descEn;
+  document.getElementById('editStyleMatsFa').value = s.matsFa;
+  document.getElementById('editStyleMatsEn').value = s.matsEn;
+  document.getElementById('editStyleImg').value = s.img;
+  document.getElementById('editStyleStatus').value = s.status;
+  document.getElementById('styleEditTitle').textContent = 'ویرایش: '+s.fa;
+  openModal('styleEditModal');
+}
+
+function saveStyleEdit(){
+  var id = document.getElementById('editStyleId').value;
+  var idx = STYLES_DATA.findIndex(function(x){return x.id===id});
+  if(idx<0) return;
+  STYLES_DATA[idx].fa = document.getElementById('editStyleFa').value;
+  STYLES_DATA[idx].en = document.getElementById('editStyleEn').value;
+  STYLES_DATA[idx].tagFa = document.getElementById('editStyleTagFa').value;
+  STYLES_DATA[idx].tagEn = document.getElementById('editStyleTagEn').value;
+  STYLES_DATA[idx].descFa = document.getElementById('editStyleDescFa').value;
+  STYLES_DATA[idx].descEn = document.getElementById('editStyleDescEn').value;
+  STYLES_DATA[idx].matsFa = document.getElementById('editStyleMatsFa').value;
+  STYLES_DATA[idx].matsEn = document.getElementById('editStyleMatsEn').value;
+  STYLES_DATA[idx].img = document.getElementById('editStyleImg').value;
+  STYLES_DATA[idx].status = document.getElementById('editStyleStatus').value;
+  saveStore('styles', STYLES_DATA);
+  closeModal('styleEditModal');
+  renderStyleAdminGrid();
+  renderStylePagesTable();
+  showToast('سبک "'+STYLES_DATA[idx].fa+'" ذخیره شد','success');
+}
+
+function deleteStyle(id){
+  if(!confirm('آیا از حذف این سبک اطمینان دارید؟')) return;
+  STYLES_DATA = STYLES_DATA.filter(function(s){return s.id!==id});
+  saveStore('styles', STYLES_DATA);
+  renderStyleAdminGrid();
+  renderStylePagesTable();
+  showToast('سبک حذف شد','success');
+}
+
+function addNewStyle(){
+  var fa = document.getElementById('newStyleFa').value.trim();
+  var en = document.getElementById('newStyleEn').value.trim();
+  if(!fa||!en){showToast('نام سبک (فارسی و انگلیسی) الزامی است','error');return;}
+  var id = en.toLowerCase().replace(/\s+/g,'-');
+  var newS = {
+    id:id, fa:fa, en:en,
+    tagFa:document.getElementById('newStyleTagFa').value||fa,
+    tagEn:document.getElementById('newStyleTagEn').value||en,
+    descFa:document.getElementById('newStyleDescFa').value||'',
+    descEn:document.getElementById('newStyleDescEn').value||'',
+    matsFa:document.getElementById('newStyleMatsFa').value||'',
+    matsEn:document.getElementById('newStyleMatsEn').value||'',
+    img:document.getElementById('newStyleImg1').value||'',
+    img2:document.getElementById('newStyleImg2').value||'',
+    img3:document.getElementById('newStyleImg3').value||'',
+    emoji:document.getElementById('newStyleEmoji').value||'🏠',
+    status:document.getElementById('newStyleStatus').value,
+    page:'style_'+id+'.html'
+  };
+  STYLES_DATA.push(newS);
+  saveStore('styles', STYLES_DATA);
+  // clear form
+  ['newStyleFa','newStyleEn','newStyleTagFa','newStyleTagEn','newStyleDescFa','newStyleDescEn',
+   'newStyleMatsFa','newStyleMatsEn','newStyleImg1','newStyleImg2','newStyleImg3','newStyleEmoji'].forEach(function(f){
+    document.getElementById(f).value='';
+  });
+  renderStyleAdminGrid();
+  renderStylePagesTable();
+  // switch to list tab
+  var listBtn = document.querySelector('[onclick*="styles-list"]');
+  if(listBtn) switchTab(listBtn,'styles-list');
+  showToast('سبک "'+fa+'" اضافه شد ✦','success');
+}
+
+/* ======================================================
+   3D VIEWS PANEL
+   ====================================================== */
+function renderViewsPanel(){
+  render3dGrid();
+  renderEngGrid();
+}
+
+function makeViewCard(v){
+  var styleNames = {european:'اروپایی',american:'آمریکایی',eastasian:'آسیای شرقی',arabic:'عربی',iranian:'ایرانی'};
+  var roomNames = {living:'نشیمن',bedroom:'اتاق خواب',kitchen:'آشپزخانه',dining:'ناهارخوری'};
+  return '<div class="view-card"><div class="vc-preview"><div class="vc-placeholder">'+
+    (v.type==='3d'?'🏛':'📐')+'</div></div>'
+    +'<div class="vc-body"><h5>'+v.name+'</h5>'
+    +'<span>'+( styleNames[v.style]||v.style)+' · '+(roomNames[v.room]||v.room)+' · '+v.dims+'</span></div>'
+    +'<div class="vc-foot">'
+    +'<span class="badge '+(v.status==='active'?'active':'inactive')+'">'+statusLabel(v.status)+'</span>'
+    +'<button class="act-btn edit" onclick="editView(\''+v.id+'\')" style="margin-right:auto">ویرایش</button>'
+    +'<button class="act-btn del" onclick="deleteView(\''+v.id+'\')">حذف</button>'
+    +'</div></div>';
+}
+
+function render3dGrid(){
+  var g = document.getElementById('views3dGrid');
+  if(!g) return;
+  var items = VIEWS_DATA.filter(function(v){return v.type==='3d'});
+  g.innerHTML = items.length ? items.map(makeViewCard).join('') :
+    '<div class="empty-state"><div class="es-ic">🏛</div><p>هنوز نمای ۳D اضافه نشده است</p></div>';
+}
+
+function renderEngGrid(){
+  var g = document.getElementById('viewsEngGrid');
+  if(!g) return;
+  var items = VIEWS_DATA.filter(function(v){return v.type==='2d'});
+  g.innerHTML = items.length ? items.map(makeViewCard).join('') :
+    '<div class="empty-state"><div class="es-ic">📐</div><p>هنوز نقشه مهندسی اضافه نشده است</p></div>';
+}
+
+function editView(id){
+  var v = VIEWS_DATA.find(function(x){return x.id===id});
+  if(!v) return;
+  document.getElementById('editViewId').value = id;
+  document.getElementById('editViewName').value = v.name;
+  document.getElementById('editViewType').value = v.type;
+  document.getElementById('editViewStyle').value = v.style;
+  document.getElementById('editViewRoom').value = v.room;
+  document.getElementById('editViewStatus').value = v.status;
+  openModal('viewEditModal');
+}
+
+function saveViewEdit(){
+  var id = document.getElementById('editViewId').value;
+  var idx = VIEWS_DATA.findIndex(function(x){return x.id===id});
+  if(idx<0) return;
+  VIEWS_DATA[idx].name = document.getElementById('editViewName').value;
+  VIEWS_DATA[idx].type = document.getElementById('editViewType').value;
+  VIEWS_DATA[idx].style = document.getElementById('editViewStyle').value;
+  VIEWS_DATA[idx].room = document.getElementById('editViewRoom').value;
+  VIEWS_DATA[idx].status = document.getElementById('editViewStatus').value;
+  saveStore('views3d', VIEWS_DATA);
+  closeModal('viewEditModal');
+  render3dGrid(); renderEngGrid();
+  showToast('نما ذخیره شد','success');
+}
+
+function deleteView(id){
+  if(!confirm('حذف این نما؟')) return;
+  VIEWS_DATA = VIEWS_DATA.filter(function(v){return v.id!==id});
+  saveStore('views3d', VIEWS_DATA);
+  render3dGrid(); renderEngGrid();
+  showToast('نما حذف شد','success');
+}
+
+function addNewView(){
+  var name = document.getElementById('newViewName').value.trim();
+  if(!name){showToast('نام نما الزامی است','error');return;}
+  var newV = {
+    id:'v'+Date.now(),
+    name:name,
+    type:document.getElementById('newViewType').value,
+    style:document.getElementById('newViewStyle').value,
+    room:document.getElementById('newViewRoom').value,
+    desc:document.getElementById('newViewDesc').value,
+    img:document.getElementById('newViewImg').value,
+    dims:document.getElementById('newViewDims').value||'—',
+    status:document.getElementById('newViewStatus').value
+  };
+  VIEWS_DATA.push(newV);
+  saveStore('views3d', VIEWS_DATA);
+  document.getElementById('newViewName').value='';
+  document.getElementById('newViewDesc').value='';
+  document.getElementById('newViewImg').value='';
+  document.getElementById('newViewDims').value='';
+  render3dGrid(); renderEngGrid();
+  var addBtn = document.querySelector('[onclick*="views-3d"]');
+  if(addBtn) switchTab(addBtn, 'views-3d');
+  showToast('نما "'+name+'" اضافه شد','success');
+}
+
+/* ======================================================
+   REQUESTS PANEL
+   ====================================================== */
+var _reqFilter = 'all';
+function filterReqs(btn, filter){
+  _reqFilter = filter;
+  document.querySelectorAll('.req-filter').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  renderRequests();
+}
+
+function renderRequests(){
+  var con = document.getElementById('requestsContainer');
+  if(!con) return;
+  var data = _reqFilter==='all' ? REQUESTS_DATA :
+    REQUESTS_DATA.filter(function(r){return r.status===_reqFilter});
+  if(!data.length){
+    con.innerHTML='<div class="empty-state"><div class="es-ic">📭</div><p>درخواستی با این وضعیت وجود ندارد</p></div>';
+    return;
+  }
+  var styleNames={european:'اروپایی',american:'آمریکایی',eastasian:'آسیای شرقی',arabic:'عربی',iranian:'ایرانی'};
+  con.innerHTML = data.map(function(r){
+    return '<div class="req-card" id="reqcard-'+r.id+'">'
+      +'<div class="req-head"><h4>'+r.name+'</h4>'
+      +'<span class="badge '+r.status+'">'+statusLabel(r.status)+'</span></div>'
+      +'<div class="req-meta">'
+      +'<span class="req-meta-item"><span class="ri">📞</span>'+r.phone+'</span>'
+      +(r.email?'<span class="req-meta-item"><span class="ri">✉</span>'+r.email+'</span>':'')
+      +'<span class="req-meta-item"><span class="ri">🎨</span>'+(styleNames[r.style]||r.style)+'</span>'
+      +'<span class="req-meta-item"><span class="ri">📅</span>'+r.date+' '+r.time+'</span>'
+      +'</div>'
+      +(r.msg?'<div class="req-note">'+r.msg+'</div>':'')
+      +'<div class="req-actions">'
+      +(r.status==='new'?'<button class="act-btn confirm" onclick="changeReqStatus(\''+r.id+'\',\'pending\')">تأیید اولیه</button>':'')
+      +(r.status==='pending'?'<button class="act-btn confirm" onclick="changeReqStatus(\''+r.id+'\',\'confirmed\')">تأیید نهایی</button>':'')
+      +(r.status==='confirmed'?'<button class="act-btn confirm" onclick="changeReqStatus(\''+r.id+'\',\'done\')">انجام شد</button>':'')
+      +(r.status!=='cancelled'&&r.status!=='done'?'<button class="act-btn del" onclick="changeReqStatus(\''+r.id+'\',\'cancelled\')">لغو</button>':'')
+      +'<button class="act-btn view" onclick="viewReqDetail(\''+r.id+'\')">جزئیات</button>'
+      +'</div></div>';
+  }).join('');
+}
+
+function changeReqStatus(id, status){
+  var idx = REQUESTS_DATA.findIndex(function(r){return r.id===id});
+  if(idx<0) return;
+  REQUESTS_DATA[idx].status = status;
+  saveStore('requests', REQUESTS_DATA);
+  renderRequests();
+  // update badge
+  var newCount = REQUESTS_DATA.filter(function(r){return r.status==='new'}).length;
+  var rb = document.getElementById('reqBadge');
+  if(rb){rb.textContent=newCount||'';rb.style.display=newCount?'':'none';}
+  var nrc = document.getElementById('newReqCount');
+  if(nrc) nrc.textContent = newCount;
+  showToast('وضعیت به «'+statusLabel(status)+'» تغییر یافت','success');
+}
+
+function viewReqDetail(id){
+  var r = REQUESTS_DATA.find(function(x){return x.id===id});
+  if(!r) return;
+  var styleNames={european:'اروپایی',american:'آمریکایی',eastasian:'آسیای شرقی',arabic:'عربی',iranian:'ایرانی'};
+  document.getElementById('reqModalTitle').textContent = 'درخواست: '+r.name;
+  document.getElementById('reqModalBody').innerHTML =
+    '<div style="display:flex;flex-direction:column;gap:14px">'
+    +'<div class="field"><label>نام</label><input type="text" value="'+r.name+'" readonly></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">'
+    +'<div class="field"><label>تلفن</label><input type="text" value="'+r.phone+'" dir="ltr" readonly></div>'
+    +'<div class="field"><label>ایمیل</label><input type="text" value="'+(r.email||'—')+'" dir="ltr" readonly></div>'
+    +'</div>'
+    +'<div class="field"><label>سبک مورد نظر</label><input type="text" value="'+(styleNames[r.style]||r.style)+'" readonly></div>'
+    +'<div class="field"><label>تاریخ</label><input type="text" value="'+r.date+' ساعت '+r.time+'" readonly></div>'
+    +'<div class="field"><label>وضعیت</label>'
+    +'<select id="detailStatus">'
+    +'<option value="new" '+(r.status==='new'?'selected':'')+'>جدید</option>'
+    +'<option value="pending" '+(r.status==='pending'?'selected':'')+'>در انتظار</option>'
+    +'<option value="confirmed" '+(r.status==='confirmed'?'selected':'')+'>تأیید شده</option>'
+    +'<option value="done" '+(r.status==='done'?'selected':'')+'>انجام شده</option>'
+    +'<option value="cancelled" '+(r.status==='cancelled'?'selected':'')+'>لغو شده</option>'
+    +'</select></div>'
+    +(r.msg?'<div class="field"><label>پیام</label><textarea readonly rows="4">'+r.msg+'</textarea></div>':'')
+    +'</div>';
+  document.getElementById('reqModalFoot').innerHTML =
+    '<button class="tb-btn" onclick="closeModal(\'reqModal\')">بستن</button>'
+    +'<button class="tb-btn primary" onclick="saveReqFromModal(\''+r.id+'\')">💾 ذخیره وضعیت</button>';
+  openModal('reqModal');
+}
+
+function saveReqFromModal(id){
+  var st = document.getElementById('detailStatus');
+  if(st) changeReqStatus(id, st.value);
+  closeModal('reqModal');
+}
+
+/* ======================================================
+   USERS / VISITS
+   ====================================================== */
+function renderUsersPanel(){
+  // Page visits
+  var pvl = document.getElementById('pageVisitsList');
+  if(pvl){
+    var pages=[
+      {n:'صفحه اصلی',v:48231},{n:'گالری تعاملی',v:32844},{n:'سبک اروپایی',v:14221},
+      {n:'سبک ایرانی',v:12800},{n:'سبک آمریکایی',v:10544},{n:'تماس',v:8992}
+    ];
+    var mx=pages[0].v;
+    pvl.innerHTML=pages.map(function(p){
+      return '<div class="pv-item"><span class="pv-name">'+p.n+'</span>'
+        +'<div class="pv-bar-wrap"><div class="pv-bar" style="width:'+Math.round(p.v/mx*100)+'%"></div></div>'
+        +'<span class="pv-num">'+p.v.toLocaleString('fa-IR')+'</span></div>';
+    }).join('');
+  }
+
+  // 3D model visits
+  var mvl = document.getElementById('modelVisitsList');
+  if(mvl){
+    var models=[
+      {n:'نشیمن اروپایی',v:2840},{n:'نشیمن ایرانی',v:1922},{n:'اتاق خواب آمریکایی',v:1644},
+      {n:'ناهارخوری عربی',v:1200},{n:'آشپزخانه آسیایی',v:836}
+    ];
+    var mx2=models[0].v;
+    mvl.innerHTML=models.map(function(p){
+      return '<div class="pv-item"><span class="pv-name">'+p.n+'</span>'
+        +'<div class="pv-bar-wrap"><div class="pv-bar" style="width:'+Math.round(p.v/mx2*100)+'%;background:var(--gold)"></div></div>'
+        +'<span class="pv-num">'+p.v.toLocaleString('fa-IR')+'</span></div>';
+    }).join('');
+  }
+
+  // Month chart
+  var days=[],vals=[];
+  for(var i=29;i>=0;i--){
+    vals.push({val:Math.floor(1200+Math.random()*1800),lbl:i===0?'امروز':i===1?'دیروز':i%5===0?'-'+i:'.'});
+  }
+  renderBarChart('monthChart',null,vals,[],'rgba(77,143,136,.35)');
+}
+
+/* ======================================================
+   SEO PANEL
+   ====================================================== */
+function renderSeoPanel(){
+  // Checks
+  var checks = [
+    {type:'ok',title:'عنوان صفحه تنظیم شده',desc:'عنوان ۵۲ کاراکتر دارد (ایده‌آل: ۵۰-۶۰)'},
+    {type:'ok',title:'متا توضیح موجود است',desc:'توضیح ۱۴۸ کاراکتر دارد (ایده‌آل: ۱۳۰-۱۶۰)'},
+    {type:'ok',title:'تگ‌های Open Graph',desc:'OG Title تنظیم شده است'},
+    {type:'ok',title:'ساختار Heading صحیح',desc:'صفحه یک H1 دارد'},
+    {type:'ok',title:'متن Alt تصاویر',desc:'اکثر تصاویر Alt text دارند'},
+    {type:'ok',title:'سرعت بارگذاری',desc:'Core Web Vitals در محدوده قابل قبول'},
+    {type:'warn',title:'OG Image تنظیم نشده',desc:'پیشنهاد: تصویر ۱۲۰۰×۶۳۰px برای شبکه‌های اجتماعی'},
+    {type:'warn',title:'Sitemap.xml',desc:'Sitemap یافت نشد — پیشنهاد ایجاد sitemap.xml'},
+    {type:'warn',title:'Schema Markup',desc:'JSON-LD برای LocalBusiness پیشنهاد می‌شود'},
+    {type:'warn',title:'Canonical URL',desc:'تگ canonical نسبی است — absolute URL توصیه می‌شود'},
+    {type:'err',title:'robots.txt',desc:'فایل robots.txt یافت نشد'},
+    {type:'err',title:'HTTPS',desc:'صفحه‌ها هنوز از http استفاده می‌کنند'}
+  ];
+  var cc = document.getElementById('seoChecks');
+  if(cc){
+    cc.innerHTML = checks.map(function(c){
+      var ic = c.type==='ok'?'✓':c.type==='warn'?'⚠':'✗';
+      return '<div class="seo-check">'
+        +'<div class="ic '+c.type+'">'+ic+'</div>'
+        +'<div class="seo-check-info"><b>'+c.title+'</b><span>'+c.desc+'</span></div>'
+        +'</div>';
+    }).join('');
+  }
+
+  // Technical checks
+  var tech=[
+    {type:'ok',title:'بارگذاری فونت‌ها بهینه است',desc:'فونت‌ها از CDN بارگذاری می‌شوند'},
+    {type:'ok',title:'loading="lazy" برای تصاویر',desc:'تصاویر به درستی Lazy Load شده‌اند'},
+    {type:'ok',title:'viewport meta tag',desc:'صفحه موبایل-فرست است'},
+    {type:'warn',title:'Compression',desc:'فشرده‌سازی Gzip/Brotli پیشنهاد می‌شود'},
+    {type:'warn',title:'Cache Policy',desc:'تنظیم Cache-Control header برای assets پیشنهاد می‌شود'},
+    {type:'err',title:'HTTPS Redirect',desc:'HTTP به HTTPS ریدایرکت نشده است'}
+  ];
+  var tc = document.getElementById('techChecks');
+  if(tc){
+    tc.innerHTML = tech.map(function(c){
+      var ic = c.type==='ok'?'✓':c.type==='warn'?'⚠':'✗';
+      return '<div class="seo-check"><div class="ic '+c.type+'">'+ic+'</div>'
+        +'<div class="seo-check-info"><b>'+c.title+'</b><span>'+c.desc+'</span></div></div>';
+    }).join('');
+  }
+
+  // Keywords
+  renderKeywordList();
+
+  // Opportunities
+  var opp=[
+    {kw:'طراحی داخلی تهران',vol:4200,comp:38,pos:null},
+    {kw:'قیمت دکوراسیون منزل',vol:5100,comp:62,pos:null},
+    {kw:'سبک مینیمال ایرانی',vol:1800,comp:28,pos:null}
+  ];
+  var kop = document.getElementById('kwOpportunities');
+  if(kop){
+    kop.innerHTML = opp.map(function(k){
+      return '<div class="seo-kw">'
+        +'<span class="seo-kw-name">'+k.kw+'</span>'
+        +'<div class="seo-kw-bar-wrap"><div class="seo-kw-bar" style="width:'+Math.round(k.vol/5100*100)+'%;background:var(--teal)"></div></div>'
+        +'<span class="seo-kw-num" style="color:var(--teal)">'+k.vol.toLocaleString('fa-IR')+'</span>'
+        +'<span class="tag-pill">جدید</span></div>';
+    }).join('');
+  }
+
+  // SEO meta fields
+  document.getElementById('seoTitle').value = SEO_META.title||'';
+  document.getElementById('seoDesc').value = SEO_META.desc||'';
+  document.getElementById('seoKeywords').value = SEO_META.keywords||'';
+  document.getElementById('seoCanonical').value = SEO_META.canonical||'';
+  document.getElementById('ogTitle').value = SEO_META.ogTitle||'';
+  document.getElementById('ogImage').value = SEO_META.ogImage||'';
+  updateCharCount(document.getElementById('seoTitle'),'seoTitleCount',50,60);
+  updateCharCount(document.getElementById('seoDesc'),'seoDescCount',140,160);
+}
+
+function renderKeywordList(){
+  var kl = document.getElementById('keywordList');
+  if(!kl) return;
+  kl.innerHTML = KEYWORDS_DATA.map(function(k,i){
+    return '<div class="seo-kw">'
+      +'<span style="font-size:.7rem;font-weight:800;color:var(--ink3);width:20px">'+(i+1)+'</span>'
+      +'<span class="seo-kw-name">'+k.kw+'</span>'
+      +'<div class="seo-kw-bar-wrap"><div class="seo-kw-bar" style="width:'+Math.round(k.vol/8400*100)+'%"></div></div>'
+      +'<span class="seo-kw-num">'+k.vol.toLocaleString('fa-IR')+'</span>'
+      +(k.pos?'<span class="tag-pill">رتبه '+k.pos+'</span>':'')
+      +'<button class="act-btn del" style="padding:3px 8px" onclick="deleteKeyword('+i+')">✕</button>'
+      +'</div>';
+  }).join('');
+}
+
+function deleteKeyword(i){
+  KEYWORDS_DATA.splice(i,1);
+  saveStore('keywords',KEYWORDS_DATA);
+  renderKeywordList();
+  showToast('کلمه کلیدی حذف شد','success');
+}
+
+function showAddKeywordModal(){openModal('addKwModal')}
+
+function addKeyword(){
+  var txt = document.getElementById('newKwText').value.trim();
+  if(!txt){showToast('کلمه کلیدی را وارد کنید','error');return;}
+  KEYWORDS_DATA.push({
+    kw:txt,
+    vol:parseInt(document.getElementById('newKwVol').value)||0,
+    comp:parseInt(document.getElementById('newKwComp').value)||0,
+    pos:null
+  });
+  saveStore('keywords',KEYWORDS_DATA);
+  document.getElementById('newKwText').value='';
+  document.getElementById('newKwVol').value='';
+  document.getElementById('newKwComp').value='';
+  closeModal('addKwModal');
+  renderKeywordList();
+  showToast('کلمه کلیدی اضافه شد','success');
+}
+
+function saveSeoMeta(){
+  SEO_META.title = document.getElementById('seoTitle').value;
+  SEO_META.desc  = document.getElementById('seoDesc').value;
+  SEO_META.keywords = document.getElementById('seoKeywords').value;
+  SEO_META.canonical = document.getElementById('seoCanonical').value;
+  SEO_META.ogTitle = document.getElementById('ogTitle').value;
+  SEO_META.ogImage = document.getElementById('ogImage').value;
+  saveStore('seo_meta', SEO_META);
+  showToast('متاتگ‌های SEO ذخیره شد ✦','success');
+}
+
+function updateCharCount(input, counterId, ideal, max){
+  var el = document.getElementById(counterId);
+  if(!el) return;
+  var len = input.value.length;
+  el.textContent = len + ' / ' + max + ' کاراکتر';
+  el.className = 'seo-char-counter' + (len>=ideal && len<=max ? ' ok' : len>max ? ' warn' : '');
+}
+
+/* ======================================================
+   STATUS LABELS
+   ====================================================== */
+function statusLabel(s){
+  var m={new:'جدید',pending:'در انتظار',confirmed:'تأیید شده',done:'انجام شده',
+         cancelled:'لغو شده',active:'فعال',inactive:'غیرفعال',draft:'پیش‌نویس'};
+  return m[s]||s;
+}
+
+/* ======================================================
+   PANEL ROUTER
+   ====================================================== */
+function renderPanel(id){
+  if(id==='dashboard') renderDashboard();
+  else if(id==='styles') renderStylesPanel();
+  else if(id==='views3d') renderViewsPanel();
+  else if(id==='requests') renderRequests();
+  else if(id==='users') renderUsersPanel();
+  else if(id==='seo') renderSeoPanel();
+  else if(id==='images') renderImagesPanel();
+}
+
+/* ======================================================
+   INIT
+   ====================================================== */
+
+/* ======================================================
+   IMAGE MANAGER
+   ====================================================== */
+var IMG_BASE_URL = 'https://image.qwenlm.ai/public_source/5870f94c-74bc-42c5-a64c-17c3942a7aff/';
+
+var IMG_DEFAULTS = {
+  site_hero:     IMG_BASE_URL + '1898c5d55-0450-4898-b5ec-4d905b6187ef.png',
+  site_services: IMG_BASE_URL + '19e303291-67c0-4d66-bae5-214d54639a8d.png',
+  european_img1: IMG_BASE_URL + '1b042aaac-9832-43fa-8882-4a8970b70c2b.png',
+  european_img2: IMG_BASE_URL + '12badd6c8-4037-4872-b5a9-6a6b3da26a67.png',
+  european_img3: IMG_BASE_URL + '1050ab7b4-ad9e-4d17-9325-bbc302a46c00.png',
+  european_img4: IMG_BASE_URL + '12badd6c8-4037-4872-b5a9-6a6b3da26a67.png',
+  european_img5: IMG_BASE_URL + '1050ab7b4-ad9e-4d17-9325-bbc302a46c00.png',
+  european_img6: IMG_BASE_URL + '1b042aaac-9832-43fa-8882-4a8970b70c2b.png',
+  american_img1: IMG_BASE_URL + '195bd2857-3bb5-4eb2-9f97-8aa6821408cf.png',
+  american_img2: IMG_BASE_URL + '16c2c552f-194e-4c44-bc00-5da1280215f5.png',
+  american_img3: IMG_BASE_URL + '11eb6c8ff-a17a-429b-b5af-3ab4d88d9939.png',
+  american_img4: IMG_BASE_URL + '16c2c552f-194e-4c44-bc00-5da1280215f5.png',
+  american_img5: IMG_BASE_URL + '11eb6c8ff-a17a-429b-b5af-3ab4d88d9939.png',
+  american_img6: IMG_BASE_URL + '195bd2857-3bb5-4eb2-9f97-8aa6821408cf.png',
+  eastasian_img1: IMG_BASE_URL + '19a46a0c8-393c-4e03-9fd8-d57299ddac30.png',
+  eastasian_img2: IMG_BASE_URL + '11eeb1f54-1b9f-4c07-b367-d9eb49edd271.png',
+  eastasian_img3: IMG_BASE_URL + '1c7ee2529-6738-485a-a2f4-13013c4a6763.png',
+  eastasian_img4: IMG_BASE_URL + '11eeb1f54-1b9f-4c07-b367-d9eb49edd271.png',
+  eastasian_img5: IMG_BASE_URL + '1c7ee2529-6738-485a-a2f4-13013c4a6763.png',
+  eastasian_img6: IMG_BASE_URL + '19a46a0c8-393c-4e03-9fd8-d57299ddac30.png',
+  arabic_img1: IMG_BASE_URL + '126388177-f1a9-47ff-b7a4-a359a655b84c.png',
+  arabic_img2: IMG_BASE_URL + '16f2ce15e-ca37-45c6-8616-a2376ea35875.png',
+  arabic_img3: IMG_BASE_URL + '1f9fa34a1-b2d8-4b40-8bec-6fdd993dc92e.png',
+  arabic_img4: IMG_BASE_URL + '16f2ce15e-ca37-45c6-8616-a2376ea35875.png',
+  arabic_img5: IMG_BASE_URL + '1f9fa34a1-b2d8-4b40-8bec-6fdd993dc92e.png',
+  arabic_img6: IMG_BASE_URL + '126388177-f1a9-47ff-b7a4-a359a655b84c.png',
+  iranian_img1: IMG_BASE_URL + '1dc6b4d1d-4d5e-4e38-9b0a-ec8d55c7264c.png',
+  iranian_img2: IMG_BASE_URL + '1d699784d-b451-40ef-89a0-96e5afba0d73.png',
+  iranian_img3: IMG_BASE_URL + '1dfc11b64-55d3-4c00-8925-e3a631e362ef.png',
+  iranian_img4: IMG_BASE_URL + '1d699784d-b451-40ef-89a0-96e5afba0d73.png',
+  iranian_img5: IMG_BASE_URL + '1dfc11b64-55d3-4c00-8925-e3a631e362ef.png',
+  iranian_img6: IMG_BASE_URL + '1dc6b4d1d-4d5e-4e38-9b0a-ec8d55c7264c.png'
+};
+
+var IMG_LABELS = {
+  site_hero:'Hero صفحه اصلی', site_services:'تصویر خدمات',
+  img1:'Hero اصلی', img2:'تامبنیل ۱', img3:'تامبنیل ۲',
+  img4:'گالری ۴', img5:'گالری ۵', img6:'گالری ۶'
+};
+
+var IMG_SLOTS = {
+  site_hero:  {slot:'hero',  labelFa:'تصویر اصلی Hero'},
+  site_services:{slot:'hero',labelFa:'تصویر بخش خدمات'},
+  img1:{slot:'hero',   labelFa:'Hero اصلی — هدر صفحه'},
+  img2:{slot:'thumb',  labelFa:'تامبنیل ۱ — Hero'},
+  img3:{slot:'thumb',  labelFa:'تامبنیل ۲ — Hero'},
+  img4:{slot:'gallery',labelFa:'گالری — تصویر ۴'},
+  img5:{slot:'gallery',labelFa:'گالری — تصویر ۵'},
+  img6:{slot:'gallery',labelFa:'گالری — تصویر ۶'}
+};
+
+// Load images from store (falls back to defaults)
+var IMG_DATA = loadStore('site_images', {});
+function getImg(key){ return IMG_DATA[key] || IMG_DEFAULTS[key] || ''; }
+function setImg(key, url){ IMG_DATA[key] = url; saveStore('site_images', IMG_DATA); }
+function resetImg(key){
+  delete IMG_DATA[key];
+  saveStore('site_images', IMG_DATA);
+  refreshImgPanel();
+  showToast('تصویر به حالت پیش‌فرض بازگشت','success');
+}
+
+/* render per-style tab */
+function renderStyleImgTab(styleId){
+  var STYLE_NAMES={european:'اروپایی',american:'آمریکایی',eastasian:'آسیای شرقی',arabic:'عربی',iranian:'ایرانی'};
+  var slots = ['img1','img2','img3','img4','img5','img6'];
+  var slotLabels = {
+    img1:'Hero — تصویر اصلی',
+    img2:'Hero — تامبنیل ۱',
+    img3:'Hero — تامبنیل ۲',
+    img4:'گالری — ردیف ۱',
+    img5:'گالری — ردیف ۲',
+    img6:'گالری — ردیف ۳'
+  };
+  var slotBadges = {img1:'hero',img2:'thumb',img3:'thumb',img4:'gallery',img5:'gallery',img6:'gallery'};
+  var html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">'
+    +'<h3 style="font-size:1rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px">'
+    +'<span style="font-size:1.2rem">'+(styleId==='european'?'🏛':styleId==='american'?'🏡':styleId==='eastasian'?'⛩':styleId==='arabic'?'🕌':'🏺')+'</span>'
+    +'تصاویر سبک '+STYLE_NAMES[styleId]+'</h3>'
+    +'<button class="tb-btn" onclick="resetAllStyleImgs(\''+styleId+'\')" style="font-size:.75rem">↺ بازگشت همه به پیش‌فرض</button>'
+    +'</div>'
+    +'<div class="style-imgs-grid">';
+
+  slots.forEach(function(s){
+    var key = styleId+'_'+s;
+    var changed = !!IMG_DATA[key];
+    html += '<div class="img-manager-block" id="imb_'+key+'">'
+      +'<div class="imb-preview-wrap">'
+      +'<img class="imb-preview" id="prev_'+key+'" src="'+getImg(key)+'" alt="'+s+'">'
+      +'<div class="imb-overlay">'
+      +'<button class="act-btn edit" onclick="openImgEdit(\''+key+'\',\''+slotLabels[s]+'\')">✏ تغییر</button>'
+      +'<button class="act-btn del" onclick="resetImg(\''+key+'\')">↺ پیش‌فرض</button>'
+      +'</div></div>'
+      +'<div class="imb-meta">'
+      +'<span class="imb-label">'+slotLabels[s]+(changed?'<span class="changed-badge">ویرایش شده</span>':'')+'</span>'
+      +'<span class="imb-slot-badge '+slotBadges[s]+'">'+slotBadges[s]+'</span>'
+      +'<span class="imb-url" id="url_'+key+'">'+(getImg(key)||'—')+'</span>'
+      +'</div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderMainImgTab(){
+  ['site_hero','site_services'].forEach(function(key){
+    var el = document.getElementById('prev_'+key);
+    var ul = document.getElementById('url_'+key);
+    if(el) el.src = getImg(key);
+    if(ul) ul.textContent = getImg(key)||'—';
+  });
+}
+
+function refreshImgPanel(){
+  renderMainImgTab();
+  document.querySelectorAll('.style-img-tab').forEach(function(el){
+    var s = el.dataset.style;
+    if(s) el.innerHTML = renderStyleImgTab(s);
+  });
+}
+
+function resetAllStyleImgs(styleId){
+  if(!confirm('همه تصاویر سبک '+styleId+' به پیش‌فرض برمی‌گردند؟')) return;
+  ['img1','img2','img3','img4','img5','img6'].forEach(function(s){
+    delete IMG_DATA[styleId+'_'+s];
+  });
+  saveStore('site_images', IMG_DATA);
+  refreshImgPanel();
+  showToast('همه تصاویر به پیش‌فرض بازگشتند','success');
+}
+
+/* ── image edit modal ── */
+var _editingKey = '';
+var _editingLabel = '';
+
+function openImgEdit(key, label){
+  _editingKey = key;
+  _editingLabel = label||key;
+  var cur = getImg(key);
+
+  // build modal
+  var body = document.getElementById('imgEditModalBody');
+  var title = document.getElementById('imgEditModalTitle');
+  if(!body||!title) return;
+  title.textContent = 'ویرایش: '+_editingLabel;
+
+  // collect presets for this key (same style group)
+  var presets = buildPresets(key);
+
+  body.innerHTML =
+    '<div class="img-edit-modal-body">'
+    // preview
+    +'<img class="img-preview-big" id="imgEditPreview" src="'+cur+'" alt="preview" onerror="this.style.opacity=.3">'
+    // URL input
+    +'<div class="field"><label>آدرس URL تصویر</label>'
+    +'<div class="img-url-input-wrap">'
+    +'<input type="url" id="imgEditUrl" value="'+cur+'" dir="ltr" placeholder="https://..." '
+    +'oninput="document.getElementById(\'imgEditPreview\').src=this.value" '
+    +'onpaste="setTimeout(function(){document.getElementById(\'imgEditPreview\').src=document.getElementById(\'imgEditUrl\').value},50)">'
+    +'<button class="img-test-btn" onclick="testImgUrl()">تست</button>'
+    +'</div>'
+    +'<div class="field-hint">URL مستقیم تصویر را وارد کنید (jpg, png, webp)</div></div>'
+    // drop zone
+    +'<div class="img-drop-zone" ondragover="event.preventDefault()" ondrop="handleImgDrop(event)">'
+    +'<span class="dz-ic">📁</span>'
+    +'فایل تصویر را اینجا رها کنید یا کلیک کنید<br>'
+    +'<small style="color:var(--ink3)">JPG, PNG, WebP حداکثر ۵ مگابایت</small>'
+    +'<input type="file" accept="image/*" style="display:none" id="imgFileInput" onchange="handleImgFile(this)">'
+    +'</div>'
+    // presets
+    +(presets.length ? '<div class="field"><label>تصاویر پیشنهادی این سبک</label>'
+    +'<div class="img-presets">'+presets+'</div></div>' : '')
+    +'</div>';
+
+  // click on drop zone
+  body.querySelector('.img-drop-zone').onclick = function(e){
+    if(e.target.tagName!=='INPUT') document.getElementById('imgFileInput').click();
+  };
+
+  openModal('imgEditModal');
+}
+
+function buildPresets(key){
+  // find which style this key belongs to, show its default images as presets
+  var styleId = key.split('_')[0];
+  var slots = ['img1','img2','img3','img4','img5','img6'];
+  if(key==='site_hero'||key==='site_services') return '';
+  var html = '';
+  slots.forEach(function(s){
+    var dKey = styleId+'_'+s;
+    var url = IMG_DEFAULTS[dKey]||'';
+    if(!url) return;
+    var isSelected = (url === (document.getElementById('imgEditUrl')||{}).value);
+    html += '<div class="img-preset-item'+(isSelected?' selected':'')+'" onclick="selectPreset(\''+url+'\')">'
+      +'<img src="'+url+'" alt="preset" onerror="this.parentElement.style.display=\'none\'">'
+      +'<span>پیش‌فرض '+s+'</span></div>';
+  });
+  return html;
+}
+
+function selectPreset(url){
+  var inp = document.getElementById('imgEditUrl');
+  var prev = document.getElementById('imgEditPreview');
+  if(inp) inp.value = url;
+  if(prev) prev.src = url;
+  document.querySelectorAll('.img-preset-item').forEach(function(el){el.classList.remove('selected')});
+  event.currentTarget.classList.add('selected');
+}
+
+function testImgUrl(){
+  var url = document.getElementById('imgEditUrl').value.trim();
+  var prev = document.getElementById('imgEditPreview');
+  if(!url){showToast('آدرس URL خالی است','error');return;}
+  prev.onerror = function(){showToast('تصویر بارگذاری نشد — URL را بررسی کنید','error');prev.style.opacity='.3';};
+  prev.onload = function(){showToast('تصویر با موفقیت بارگذاری شد ✦','success');prev.style.opacity='1';};
+  prev.src = url;
+}
+
+function handleImgDrop(e){
+  e.preventDefault();
+  var file = e.dataTransfer.files[0];
+  if(file) readImgFile(file);
+}
+
+function handleImgFile(input){
+  if(input.files[0]) readImgFile(input.files[0]);
+}
+
+function readImgFile(file){
+  if(file.size > 5*1024*1024){showToast('فایل بیش از ۵ مگابایت است','error');return;}
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var url = e.target.result; // base64
+    var inp = document.getElementById('imgEditUrl');
+    var prev = document.getElementById('imgEditPreview');
+    if(inp) inp.value = url;
+    if(prev){prev.src = url; prev.style.opacity='1';}
+    showToast('تصویر آپلود شد — برای ذخیره تأیید کنید','info');
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveImgEdit(){
+  var url = (document.getElementById('imgEditUrl').value||'').trim();
+  if(!url){showToast('آدرس URL خالی است','error');return;}
+  setImg(_editingKey, url);
+  refreshImgPanel();
+  closeModal('imgEditModal');
+  showToast('تصویر ذخیره شد ✦','success');
+  // also sync STYLES_DATA if it's a style image
+  var parts = _editingKey.split('_');
+  if(parts.length===2 && ['img1','img2','img3'].indexOf(parts[1])>-1){
+    var si = STYLES_DATA.findIndex(function(s){return s.id===parts[0]});
+    var slotMap = {img1:'img',img2:'img2',img3:'img3'};
+    if(si>=0 && slotMap[parts[1]]) STYLES_DATA[si][slotMap[parts[1]]] = url;
+    saveStore('styles', STYLES_DATA);
+  }
+}
+
+function renderImagesPanel(){
+  renderMainImgTab();
+  document.querySelectorAll('.style-img-tab').forEach(function(el){
+    var s = el.dataset.style;
+    if(s && !el.innerHTML.trim()) el.innerHTML = renderStyleImgTab(s);
+  });
+}
+
+</script>
+
+<div class="modal-bg" id="imgEditModal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-head">
+      <h3 id="imgEditModalTitle">ویرایش تصویر</h3>
+      <button class="modal-close" onclick="closeModal('imgEditModal')">✕</button>
+    </div>
+    <div class="modal-body" id="imgEditModalBody"></div>
+    <div class="modal-foot">
+      <button class="tb-btn" onclick="closeModal('imgEditModal')">انصراف</button>
+      <button class="tb-btn primary" onclick="saveImgEdit()">💾 ذخیره تصویر</button>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+/* ================================================================
+   FINAL OVERRIDE — آخرین اسکریپت، همه توابع API-based را درست می‌کند
+   ================================================================ */
+
+function _g(id) { return document.getElementById(id); }
+function _v(id) { var e = _g(id); return e ? e.value : ''; }
+function _s(id, val) { var e = _g(id); if (e) e.textContent = String(val || 0); }
+
+/* ================================================================
+   PANEL ROUTER
+   ================================================================ */
+renderPanel = function(id) {
+  if      (id === 'dashboard') _loadDash();
+  else if (id === 'requests')  loadRequests();
+  else if (id === 'styles')    loadStyles();
+  else if (id === 'views3d')   loadViews();
+  else if (id === 'seo')       loadSeo();
+  else if (id === 'images')    { loadImagesFromAPI(); _renderImgPanel(); }
+  else if (id === 'users')     _renderUsers();
+};
+
+initApp = function() { _loadDash(); goPanel('dashboard'); };
+
+/* ================================================================
+   DASHBOARD
+   ================================================================ */
+function _loadDash() {
+  API.get('dashboard.php').then(function(d) {
+    if (!d || !d.success) return;
+    var s = d.stats || {};
+
+    _s('reqCount',    s.new_requests || 0);
+    _s('newReqCount', s.new_requests || 0);
+    var rb = _g('reqBadge');
+    if (rb) { rb.textContent = s.new_requests || 0; rb.style.display = s.new_requests ? '' : 'none'; }
+
+    var rr = _g('dashRecentReqs');
+    if (rr) {
+      if (d.recent_requests && d.recent_requests.length) {
+        var sn = {european:'اروپایی',american:'آمریکایی',eastasian:'آسیای شرقی',arabic:'عربی',iranian:'ایرانی'};
+        rr.innerHTML = d.recent_requests.map(function(r) {
+          return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)">'
+            + '<div><span style="font-size:.85rem;font-weight:700;color:var(--ink)">' + esc(r.name) + '</span>'
+            + '<span style="display:block;font-size:.72rem;color:var(--ink3)">' + esc(r.phone||'') + '</span></div>'
+            + '<span class="badge ' + r.status + '">' + statusLabel(r.status) + '</span>'
+            + '</div>';
+        }).join('');
+      } else {
+        rr.innerHTML = '<p style="color:var(--ink3);font-size:.82rem;text-align:center;padding:20px 0">درخواستی ثبت نشده</p>';
+      }
+    }
+
+    var vc = _g('visitChart');
+    if (vc) {
+      if (d.weekly_chart && d.weekly_chart.length) {
+        var rows = d.weekly_chart;
+        var max = Math.max.apply(null, rows.map(function(r){return +r.cnt||0})) || 1;
+        var dayNames = ['ش','ی','د','س','چ','پ','ج'];
+        vc.innerHTML = rows.map(function(r) {
+          var pct = Math.max(Math.round((+r.cnt||0)/max*100), 4);
+          var dn = dayNames[new Date(r.day).getDay()] || '';
+          return '<div class="chart-bar-wrap"><div class="chart-bar" style="height:'+pct+'%"><span class="cb-tip">'+r.cnt+'</span></div><span class="chart-bar-lbl">'+dn+'</span></div>';
+        }).join('');
+      } else {
+        vc.innerHTML = ['ش','ی','د','س','چ','پ','ج'].map(function(d) {
+          return '<div class="chart-bar-wrap"><div class="chart-bar" style="height:4%;opacity:.2"></div><span class="chart-bar-lbl">'+d+'</span></div>';
+        }).join('');
+      }
+    }
+  });
+}
+loadDashboard = _loadDash;
+renderDashboard = _loadDash;
+
+/* ================================================================
+   REQUESTS
+   ================================================================ */
+renderRequests = function() {
+  var wrap = _g('requestsContainer') || _g('requestsList');
+  if (!wrap) return;
+  if (!REQUESTS_DATA || !REQUESTS_DATA.length) {
+    wrap.innerHTML = '<div class="empty-state"><div class="es-ic">📭</div><p>درخواستی یافت نشد</p></div>';
+    return;
+  }
+  var sn = {european:'اروپایی',american:'آمریکایی',eastasian:'آسیای شرقی',arabic:'عربی',iranian:'ایرانی'};
+  wrap.innerHTML = REQUESTS_DATA.map(function(r) {
+    var dt = r.created_at ? formatDate(r.created_at) : (r.date||'');
+    var m  = r.message || r.msg || '';
+    return '<div class="req-card" id="req-'+r.id+'">'
+      +'<div class="req-head"><h4>'+esc(r.name)+'</h4>'
+      +'<span class="badge '+r.status+'">'+statusLabel(r.status)+'</span></div>'
+      +'<div class="req-meta">'
+      +'<span class="req-meta-item"><span class="ri">📞</span>'+esc(r.phone)+'</span>'
+      +(r.email?'<span class="req-meta-item"><span class="ri">✉</span>'+esc(r.email)+'</span>':'')
+      +(r.style?'<span class="req-meta-item"><span class="ri">🏠</span>'+(sn[r.style]||r.style)+'</span>':'')
+      +'<span class="req-meta-item"><span class="ri">🕐</span>'+dt+'</span>'
+      +'</div>'
+      +(m?'<div class="req-note">'+esc(m)+'</div>':'')
+      +(r.admin_note?'<div class="req-note" style="border-right:3px solid var(--gold)"><b>یادداشت:</b> '+esc(r.admin_note)+'</div>':'')
+      +'<div class="req-actions">'
+      +(r.status==='new'?'<button class="act-btn confirm" onclick="changeReqStatus('+r.id+',\'pending\')">✓ تأیید اولیه</button>':'')
+      +(r.status==='pending'?'<button class="act-btn confirm" onclick="changeReqStatus('+r.id+',\'confirmed\')">✓ تأیید نهایی</button>':'')
+      +(r.status==='confirmed'?'<button class="act-btn view" onclick="changeReqStatus('+r.id+',\'done\')">✓ انجام شد</button>':'')
+      +(['new','pending','confirmed'].indexOf(r.status)>-1?'<button class="act-btn del" onclick="changeReqStatus('+r.id+',\'cancelled\')">✕ لغو</button>':'')
+      +'<button class="act-btn edit" onclick="showReqDetail('+r.id+')">👁 جزئیات</button>'
+      +'<button class="act-btn del" style="margin-inline-start:auto" onclick="deleteReq('+r.id+')">🗑</button>'
+      +'</div></div>';
+  }).join('');
+};
+
+changeReqStatus = function(id, status) {
+  API.put('requests.php', {id:id, status:status}).then(function(d) {
+    if (d.success) { loadRequests(); showToast('وضعیت به «'+statusLabel(status)+'» تغییر یافت ✦','success'); }
+    else showToast(d.message||'خطا','error');
+  });
+};
+
+/* ================================================================
+   STYLES   — container: styleAdminGrid / stylePagesTable
+   ================================================================ */
+loadStyles = function() {
+  API.get('styles.php').then(function(d) {
+    if (!d||!d.success) return;
+    STYLES_DATA = d.data || [];
+    _renderStylesGrid();
+    _renderStylesTable();
+  });
+};
+
+function _renderStylesGrid() {
+  var grid = _g('styleAdminGrid');
+  if (!grid) return;
+  if (!STYLES_DATA.length) { grid.innerHTML='<div class="empty-state"><div class="es-ic">🎨</div><p>سبکی ثبت نشده</p></div>'; return; }
+  grid.innerHTML = STYLES_DATA.map(function(s) {
+    return '<div class="style-admin-card" data-id="'+s.id+'">'
+      +'<div class="sac-img"><img src="'+esc(s.img1_url||s.img||'')+'" alt="'+esc(s.name_fa||s.fa||'')+'" loading="lazy" onerror="this.style.opacity=.15">'
+      +'<div class="sac-overlay">'
+      +'<button class="act-btn edit" onclick="editStyle('+s.id+')">✏ ویرایش</button>'
+      +'<button class="act-btn del"  onclick="deleteStyle('+s.id+')">🗑 حذف</button>'
+      +'</div></div>'
+      +'<div class="sac-body">'
+      +'<h4>'+esc(s.emoji||'')+' '+esc(s.name_fa||s.fa||'')+' <small style="color:var(--ink3);font-size:.75rem">/ '+esc(s.name_en||s.en||'')+'</small></h4>'
+      +'<p>'+esc(s.description_fa||s.descFa||'')+'</p>'
+      +'<div class="sac-status">'
+      +'<span class="badge '+s.status+'">'+statusLabel(s.status)+'</span>'
+      +'<button class="act-btn '+(s.status==='active'?'del':'confirm')+'" onclick="toggleStyleStatus('+s.id+',\''+s.status+'\')">'
+      +(s.status==='active'?'غیرفعال':'فعال')+'</button>'
+      +'</div></div></div>';
+  }).join('');
+}
+
+function _renderStylesTable() {
+  var tb = _g('stylePagesTable');
+  if (!tb) return;
+  tb.innerHTML = STYLES_DATA.map(function(s) {
+    var page = 'style_'+(s.style_key||s.id)+'.html';
+    return '<tr><td><span style="font-size:1.1rem">'+esc(s.emoji||'')+'</span> '
+      +'<span class="cell-bold">'+esc(s.name_fa||s.fa||'')+'</span>'
+      +'<span class="cell-sub">'+esc(s.name_en||s.en||'')+'</span></td>'
+      +'<td dir="ltr" style="font-size:.75rem"><a href="'+page+'" target="_blank" style="color:var(--gold)">'+page+'</a></td>'
+      +'<td><span class="badge '+s.status+'">'+statusLabel(s.status)+'</span></td>'
+      +'<td style="font-size:.75rem;color:var(--ink3)">—</td>'
+      +'<td><div class="act-btn-group">'
+      +'<button class="act-btn edit" onclick="editStyle('+s.id+')">ویرایش</button>'
+      +'<a class="act-btn view" href="'+page+'" target="_blank">مشاهده</a>'
+      +'</div></td></tr>';
+  }).join('');
+}
+
+renderStylesPanel = function() { _renderStylesGrid(); _renderStylesTable(); };
+
+toggleStyleStatus = function(id, cur) {
+  API.put('styles.php', {id:id, status:cur==='active'?'inactive':'active'}).then(function(d) {
+    if (d.success) { loadStyles(); showToast('وضعیت تغییر یافت','success'); }
+    else showToast(d.message||'خطا','error');
+  });
+};
+
+editStyle = function(id) {
+  var s = STYLES_DATA.find(function(x){ return String(x.id)===String(id); });
+  if (!s) return;
+  var set = function(eid, val){ var e=_g(eid); if(e) e.value=val||''; };
+  set('editStyleId',     s.id);
+  set('editStyleFa',     s.name_fa    || s.fa    || '');
+  set('editStyleEn',     s.name_en    || s.en    || '');
+  set('editStyleTagFa',  s.tag_fa     || s.tagFa || '');
+  set('editStyleTagEn',  s.tag_en     || s.tagEn || '');
+  set('editStyleDescFa', s.description_fa || s.descFa || '');
+  set('editStyleDescEn', s.description_en || s.descEn || '');
+  set('editStyleMatsFa', s.materials_fa   || s.matsFa || '');
+  set('editStyleMatsEn', s.materials_en   || s.matsEn || '');
+  set('editStyleImg',    s.img1_url   || s.img   || '');
+  set('editStyleStatus', s.status     || 'active');
+  var t = _g('styleEditTitle'); if (t) t.textContent = 'ویرایش: '+(s.name_fa||s.fa||'');
+  openModal('styleEditModal');
+};
+
+saveStyleEdit = function() {
+  var payload = {
+    id:             parseInt(_v('editStyleId')),
+    name_fa:        _v('editStyleFa'),   name_en:        _v('editStyleEn'),
+    tag_fa:         _v('editStyleTagFa'),tag_en:         _v('editStyleTagEn'),
+    description_fa: _v('editStyleDescFa'),description_en:_v('editStyleDescEn'),
+    materials_fa:   _v('editStyleMatsFa'),materials_en:  _v('editStyleMatsEn'),
+    img1_url:       _v('editStyleImg'),  status:         _v('editStyleStatus')
+  };
+  API.put('styles.php', payload).then(function(d) {
+    if (d.success) { closeModal('styleEditModal'); loadStyles(); showToast('سبک ذخیره شد ✦','success'); }
+    else showToast(d.message||'خطا در ذخیره سبک','error');
+  });
+};
+
+deleteStyle = function(id) {
+  if (!confirm('این سبک حذف شود؟')) return;
+  API.delete('styles.php?id='+id).then(function(d) {
+    if (d.success) { loadStyles(); showToast('سبک حذف شد','success'); }
+    else showToast(d.message||'خطا','error');
+  });
+};
+
+addNewStyle = function() {
+  var fa = _v('newStyleFa').trim(), en = _v('newStyleEn').trim();
+  if (!fa||!en) { showToast('نام فارسی و انگلیسی الزامی است','error'); return; }
+  API.post('styles.php', {
+    style_key: en.toLowerCase().replace(/\s+/g,'-'),
+    name_fa:fa, name_en:en,
+    tag_fa:_v('newStyleTagFa'), tag_en:_v('newStyleTagEn'),
+    description_fa:_v('newStyleDescFa'), description_en:_v('newStyleDescEn'),
+    materials_fa:_v('newStyleMatsFa'),   materials_en:_v('newStyleMatsEn'),
+    emoji:_v('newStyleEmoji'),
+    img1_url:_v('newStyleImg1'), img2_url:_v('newStyleImg2'), img3_url:_v('newStyleImg3'),
+    status:_v('newStyleStatus')||'active'
+  }).then(function(d) {
+    if (d.success) { loadStyles(); showToast('سبک جدید اضافه شد ✦','success'); }
+    else showToast(d.message||'خطا','error');
+  });
+};
+
+/* ================================================================
+   VIEWS  — containers: views3dGrid, viewsEngGrid
+            inputs: newViewName/Type/Style/Room/Desc/Img/Dims/Status
+                    editViewId/Name/Type/Style/Room/Status
+   ================================================================ */
+loadViews = function() {
+  API.get('views3d.php').then(function(d) {
+    if (!d||!d.success) return;
+    VIEWS_DATA = d.data || [];
+    _renderViews();
+  });
+};
+
+function _makeViewCard(v) {
+  return '<div class="view-card">'
+    +'<div class="vc-preview">'
+    +(v.img_url?'<img src="'+esc(v.img_url)+'" alt="'+esc(v.name)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display=\'none\'">'
+      :'<div class="vc-placeholder">'+(v.type==='3d'?'🏠':'📐')+'</div>')
+    +'</div>'
+    +'<div class="vc-body"><h5>'+esc(v.name)+'</h5>'
+    +'<span>'+(v.type==='3d'?'نمای ۳D':'نقشه مهندسی')+(v.room?' — '+esc(v.room):'')+'</span></div>'
+    +'<div class="vc-foot">'
+    +'<button class="act-btn edit" onclick="editView('+v.id+')">✏</button>'
+    +'<button class="act-btn del"  onclick="deleteView('+v.id+')">🗑</button>'
+    +'<span class="badge '+v.status+'" style="margin-inline-start:auto">'+statusLabel(v.status)+'</span>'
+    +'</div></div>';
+}
+
+function _renderViews() {
+  var g3=_g('views3dGrid'), ge=_g('viewsEngGrid');
+  var v3=VIEWS_DATA.filter(function(v){return v.type==='3d';}),
+      v2=VIEWS_DATA.filter(function(v){return v.type==='2d';});
+  if (g3) g3.innerHTML = v3.length ? v3.map(_makeViewCard).join('') : '<div class="empty-state"><div class="es-ic">🏗</div><p>نمای ۳D ثبت نشده</p></div>';
+  if (ge) ge.innerHTML = v2.length ? v2.map(_makeViewCard).join('') : '<div class="empty-state"><div class="es-ic">📐</div><p>نقشه مهندسی ثبت نشده</p></div>';
+}
+
+renderViewsPanel = function() { _renderViews(); };
+
+editView = function(id) {
+  var v = VIEWS_DATA.find(function(x){ return String(x.id)===String(id); });
+  if (!v) return;
+  var set=function(eid,val){var e=_g(eid);if(e)e.value=val||'';};
+  set('editViewId',     v.id);
+  set('editViewName',   v.name);
+  set('editViewType',   v.type);
+  set('editViewStyle',  v.style_key||v.style||'');
+  set('editViewRoom',   v.room||'');
+  set('editViewStatus', v.status||'active');
+  openModal('viewEditModal');
+};
+
+saveViewEdit = function() {
+  API.put('views3d.php', {
+    id:        parseInt(_v('editViewId')),
+    name:      _v('editViewName'),
+    type:      _v('editViewType'),
+    style_key: _v('editViewStyle'),
+    room:      _v('editViewRoom'),
+    status:    _v('editViewStatus')
+  }).then(function(d) {
+    if (d.success) { closeModal('viewEditModal'); loadViews(); showToast('نما ذخیره شد ✦','success'); }
+    else showToast(d.message||'خطا','error');
+  });
+};
+
+deleteView = function(id) {
+  if (!confirm('این نما حذف شود؟')) return;
+  API.delete('views3d.php?id='+id).then(function(d) {
+    if (d.success) { loadViews(); showToast('نما حذف شد','success'); }
+    else showToast(d.message||'خطا','error');
+  });
+};
+
+addNewView = function() {
+  var name = _v('newViewName').trim();
+  if (!name) { showToast('نام نما الزامی است','error'); return; }
+  API.post('views3d.php', {
+    name:name, type:_v('newViewType'), style_key:_v('newViewStyle'),
+    room:_v('newViewRoom'), description:_v('newViewDesc'),
+    img_url:_v('newViewImg'), dimensions:_v('newViewDims'),
+    status:_v('newViewStatus')||'active'
+  }).then(function(d) {
+    if (d.success) { loadViews(); showToast('نما اضافه شد ✦','success'); }
+    else showToast(d.message||'خطا','error');
+  });
+};
+
+/* ================================================================
+   SEO
+   ================================================================ */
+saveSeoMeta = function() {
+  API.put('seo.php', {
+    page_key:'home',
+    meta_title:      _v('seoTitle'),
+    meta_description:_v('seoDesc'),
+    meta_keywords:   _v('seoKeywords'),
+    canonical_url:   _v('seoCanonical'),
+    og_title:        _v('ogTitle'),
+    og_image:        _v('ogImage')
+  }).then(function(d) {
+    if (d.success) showToast('تنظیمات SEO ذخیره شد ✦','success');
+    else showToast(d.message||'خطا','error');
+  });
+};
+
+/* ================================================================
+   IMAGES
+   ================================================================ */
+saveImgEdit = function() {
+  var url = (_g('imgEditUrl')||{}).value || '';
+  url = url.trim();
+  if (!url) { showToast('آدرس URL خالی است','error'); return; }
+  API.put('images.php', {image_key:_editingKey, image_url:url}).then(function(d) {
+    if (d.success) {
+      if (typeof IMG_DATA !== 'undefined') IMG_DATA[_editingKey] = url;
+      if (typeof refreshImgPanel === 'function') refreshImgPanel();
+      closeModal('imgEditModal');
+      showToast('تصویر ذخیره شد ✦','success');
+    } else showToast(d.message||'خطا در ذخیره تصویر','error');
+  });
+};
+
+function _renderImgPanel() {
+  if (typeof renderMainImgTab === 'function') renderMainImgTab();
+  document.querySelectorAll('.style-img-tab').forEach(function(el) {
+    var s = el.dataset.style;
+    if (s && !el.innerHTML.trim() && typeof renderStyleImgTab === 'function')
+      el.innerHTML = renderStyleImgTab(s);
+  });
+}
+
+/* ================================================================
+   USERS / VISITS
+   ================================================================ */
+function _renderUsers() {
+  var pv = _g('pageVisitsList');
+  if (pv) pv.innerHTML = '<p style="color:var(--ink3);font-size:.82rem;text-align:center;padding:20px 0">آمار بازدید صفحات پس از ثبت بازدیدکنندگان نمایش داده می‌شود.</p>';
+  var mv = _g('modelVisitsList');
+  if (mv) mv.innerHTML = '<p style="color:var(--ink3);font-size:.82rem;text-align:center;padding:20px 0">آمار مدل‌های ۳D پس از فعال‌سازی لاگ نمایش داده می‌شود.</p>';
+}
+renderUsersPanel = _renderUsers;
+
+</script>
+
+</body>
+</html>

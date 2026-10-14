@@ -1,0 +1,22 @@
+# محافظت از پوشه API آرتا دکور
+
+# فقط فایل‌های PHP مجاز هستند
+<FilesMatch "^(?!auth|contact|images|upload|requests|dashboard|seo|styles|views3d).*\.php$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# جلوگیری از مشاهده مستقیم فایل‌های غیر PHP
+<FilesMatch "\.(sql|log|env|json|md|txt|sh)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# جلوگیری از directory listing
+Options -Indexes
+
+# جلوگیری از دسترسی به config.php مستقیم (فقط از require_once قابل فراخوانی است)
+<Files "config.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
